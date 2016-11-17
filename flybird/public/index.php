@@ -14,7 +14,7 @@ ini_set('mem_memory','128M');    //加大内存  脚本运行的
 ini_set('session.name', 'helloseemeflybird');
 
 define('APP_BIRD_ROOT',dirname(__DIR__));  //站点根目录  index.php 文件的上级目录
-define('APP_HTML_ROOT',APP_BIRD_ROOT.'/html');  // html 文件夹
+define('APP_HTML_ROOT',APP_BIRD_ROOT.'/html/');  // html 文件夹
 
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../application/');
