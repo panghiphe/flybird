@@ -23,4 +23,5 @@ return [
          'index'  =>  ['index/index/hello'],  // fly bird 首页
     ],
 
+    '/'   =>  '/index/index/hello',   //首页
 ];

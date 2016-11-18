@@ -95,7 +95,7 @@ return [
     // 路由配置文件（支持配置多个）
     'route_config_file'      => ['route'],
     // 是否强制使用路由
-    'url_route_must'         => false,
+    'url_route_must'         => true,
     // 域名部署
     'url_domain_deploy'      => false,
     // 域名根，如thinkphp.cn
@@ -123,7 +123,7 @@ return [
         // 模板引擎类型 支持 php think 支持扩展
         'type'         => 'Think',
         // 模板路径
-        'view_path'    => '',
+        'view_path'    => APP_HTML_ROOT,
         // 模板后缀
         'view_suffix'  => 'html',
         // 模板文件名分隔符
