@@ -32,10 +32,7 @@ game_state.main.prototype = {
         
          var t = this;
         this.game.input.touch.onTouchStart = function(){
-            //alert(0);
             t.jump();
-            //console.log("down");
-            
         }
 
         // Create a group of 20 pipes
