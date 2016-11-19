@@ -30,8 +30,13 @@ game_state.main.prototype = {
         var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(this.jump, this); 
         
-         var t = this
-        this.game.input.touch.onTouchStart = this.onTouchStartHandler;
+         var t = this;
+        this.game.input.touch.onTouchStart = function(){
+            //alert(0);
+            t.jump();
+            //console.log("down");
+            
+        }
 
         // Create a group of 20 pipes
         this.pipes = game.add.group();
@@ -44,10 +49,6 @@ game_state.main.prototype = {
         this.score = 0;
         var style = { font: "30px Arial", fill: "#ffffff" };
         this.label_score = this.game.add.text(20, 20, "0", style);  
-    },
-    
-    onTouchStartHandler: function() {
-    	this.jump();
     },
 
     // This function is called 60 times per second
