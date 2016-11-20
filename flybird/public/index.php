@@ -23,6 +23,12 @@ define('WX_APP_SECRET','60e8afbf3c40b459076118a997bdcae2');
 define('WX_AUTH_TOKEN','gzyzlapp');
 define('WX_ACCESS_TOKEN_TIME',7100);
 
+//数据库配置
+define('MYSQL_DB_HOST','localhost');
+define('MYSQL_DB_NAME','bra_bird');
+define('MYSQL_DB_USER','bra');
+define('MYSQL_DB_PASS','bird');
+define('MYSQL_DB_PORT',3306);
 
 define('LY_LOG_PATH',APP_BIRD_ROOT.'/log/');
 // 定义应用目录

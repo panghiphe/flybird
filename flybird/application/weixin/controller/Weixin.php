@@ -19,7 +19,8 @@ class Weixin extends Weixincore{
         
     }
     public function test(){
-        dump($_SESSION);
+        print_($_SESSION);
+
         echo 'nothing';
     }
     private function _validWxAPI(){
