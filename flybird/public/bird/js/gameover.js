@@ -6,7 +6,7 @@ var gameover_state = {
 		var t = this;
 		this.game.input.touch.onTouchStart = function(){
             t.start();
-        }
+       } 
 		
 		var style = {font: "30px Arial",fill: "#666"};
 		var style1 = {font: "40px Arial",fill: "#F00"};
