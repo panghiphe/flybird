@@ -17,6 +17,8 @@ class Weixincore extends Birdcore
     // 获取 ACCESS_TOKE URL
     protected $P_accessToken_URL = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential';
     protected $error  = null;
+    private $_AppID = WX_APP_ID;
+    private $_AppSecret = WX_APP_SECRET;
 
     public function __construct()
     {
