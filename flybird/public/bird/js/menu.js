@@ -20,7 +20,7 @@ var menu_state={
 		//this.menu = this.game.add.sprite(0,0,'menu');		//加载menu图片
 		this.bird = this.game.add.sprite(x,y-60,'bird');		//载入即将闯荡管子世界的Bird
 		this.bird.anchor.setTo(0.5,0.5);
-		var gameName = this.game.add.text(x,y-118,"Flappy Bird",style);		//定义显示文本变量,并在game.world显示，参数(坐标,显示文本,文本风格)
+		var gameName = this.game.add.text(x,y-118,"Flappy Bra",style);		//定义显示文本变量,并在game.world显示，参数(坐标,显示文本,文本风格)
 		gameName.anchor.setTo(0.5,0.5);
 		var text = this.game.add.text(x,y,"Touch to start!",style);		//定义显示文本变量,并在game.world显示，参数(坐标,显示文本,文本风格)
 		text.anchor.setTo(0.5,0.5);		//
