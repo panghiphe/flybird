@@ -3,6 +3,10 @@ var gameover_state = {
 		
 		var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		space_key.onDown.add(this.start,this);	
+		var t = this;
+		this.game.input.touch.onTouchStart = function(){
+            t.start();
+        }
 		
 		var style = {font: "30px Arial",fill: "#666"};
 		var style1 = {font: "40px Arial",fill: "#F00"};
