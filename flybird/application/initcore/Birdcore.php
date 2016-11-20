@@ -13,7 +13,17 @@ use think\Controller;
 
 class Birdcore extends Controller{
 
+    public function _initialize()
+    {
+        $this->wxautologin();
+    }
 
-
+    /*判断是否满足微信自动登录*/
+    protected function wxautologin(){
+        if(isset($_GET['code'])){
+            $wx = new \app\weixin\Weixinautologin();
+            $wx->login();
+        }
+    }
 
 }

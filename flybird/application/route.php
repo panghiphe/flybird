@@ -21,6 +21,7 @@ return [
 
     '[bird]'   => [
          'index'  =>  ['index/index/hello'],  // fly bird 首页
+         'wc'   =>  ['weixin/weixin/test'],  //微信测试
     ],
 
     '/'   =>  '/index/index/hello',   //首页
