@@ -1,15 +1,16 @@
 <?php
-namespace Weixin\Controller;
+namespace app\weixin\controller;
 
 
-use Weixin\Weixin;
+use app\weixin\Weixincore;
+use app\weixin\Weixinvalid;
 
 /**
  * 微信相关主类
  * @author ly-chengminbin
  *
  */
-class WeixinController extends Weixin{
+class Weixin extends Weixincore{
     
     public function __construct(){
         if(!isset($_GET['echostr'])){
@@ -17,8 +18,12 @@ class WeixinController extends Weixin{
         }
         
     }
+    public function test(){
+        dump($_SESSION);
+        echo 'nothing';
+    }
     private function _validWxAPI(){
-            $response = new \Weixin\WeixinValid();
+            $response = new Weixinvalid();
             $response->valid();
             exit();
     }//end func
@@ -38,7 +43,7 @@ class WeixinController extends Weixin{
      */
     private function _responseMsg ()
     {
-        $msg = new \Weixin\WeixinResponse();
+        $msg = new \app\weixin\WeixinResponse();
         $msg->responseMsg();
     }    
     
@@ -47,7 +52,6 @@ class WeixinController extends Weixin{
      * 设置公众号菜单 
      */
     public function createMenu(){
-        $m = new \Weixin\WeixinMenu();
         
     }//end create menu
     
