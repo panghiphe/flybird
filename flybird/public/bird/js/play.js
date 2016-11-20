@@ -11,6 +11,10 @@ var play_state = {
 		
         var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space_key.onDown.add(this.jump, this); 
+        var t = this;
+        this.game.input.touch.onTouchStart = function(){
+            t.jump();
+        }
 
         this.pipes = game.add.group();
         this.pipes.createMultiple(20, 'pipe');  
