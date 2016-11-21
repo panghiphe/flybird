@@ -55,7 +55,7 @@ class Weixinautologin extends Weixincore
         }
         $this->_openid = $ret->openid ? $ret->openid : null; // 获取 OPENID
         $this->_unionid = $ret->unionid ? $ret->unionid : ''; // 获取 unionid
-        $this->_loginaccess_token = $ret->access_token;
+      //  $this->_loginaccess_token = $ret->access_token;    //这个 access_token 是用来刷新用户的信息的  一般没啥用
 
     }
 

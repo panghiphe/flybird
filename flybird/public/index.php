@@ -11,7 +11,7 @@
 
 // [ 应用入口文件 ]
 ini_set('mem_memory','128M');    //加大内存  脚本运行的
-ini_set('session.name', 'helloseemeflybird');
+ini_set('session.name', 'helloseemybrafly');
 
 define('APP_BIRD_ROOT',dirname(__DIR__));  //站点根目录  index.php 文件的上级目录
 define('APP_HTML_ROOT',APP_BIRD_ROOT.'/html/');  // html 文件夹
@@ -25,9 +25,9 @@ define('WX_ACCESS_TOKEN_TIME',7100);
 
 //数据库配置
 define('MYSQL_DB_HOST','localhost');
-define('MYSQL_DB_NAME','bra_bird');
-define('MYSQL_DB_USER','bra');
-define('MYSQL_DB_PASS','bird');
+define('MYSQL_DB_NAME','drsoft');
+define('MYSQL_DB_USER','drs');
+define('MYSQL_DB_PASS','drs');
 define('MYSQL_DB_PORT',3306);
 
 define('LY_LOG_PATH',APP_BIRD_ROOT.'/log/');
