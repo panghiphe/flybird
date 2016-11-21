@@ -17,10 +17,16 @@ var play_state = {
         }
 
         this.pipes = game.add.group();
-        this.pipes.createMultiple(20, 'pipe');  
+        this.pipes.createMultiple(20, 'pipe'); 
+        game.physics.arcade.enable(this.pipes, true);
+        
+        this.passPipes = game.add.group();
+        this.passPipes.createMultiple(3); 
+        game.physics.arcade.enable(this.passPipes, true);
         this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);           
 
         this.bird = this.game.add.sprite(100, 245, 'bird');
+        game.physics.arcade.enable(this.bird);
         this.bird.body.gravity.y = 1000; 		//设置Bird重力属性,gravity
         this.bird.anchor.setTo(-0.2, 0.5);		//设置Bird重心
         
@@ -42,7 +48,8 @@ var play_state = {
         if (this.bird.angle < 20)
             this.bird.angle += 1;
 
-        this.game.physics.overlap(this.bird, this.pipes, this.hit_pipe, null, this);      
+        this.game.physics.arcade.overlap(this.bird, this.pipes, this.hit_pipe, null, this); 
+        this.game.physics.arcade.overlap(this.bird, this.passPipes, this.pass_pipe, null, this);      
     },
 	//每次按下空格调用的函数
     jump: function() {
@@ -52,6 +59,17 @@ var play_state = {
         this.bird.body.velocity.y = -350;
         this.game.add.tween(this.bird).to({angle: -20}, 50).start();
         this.jump_sound.play();
+    },
+    //通过管子
+    pass_pipe: function(bird, pass) {
+        if (this.bird.alive == false)
+            return;
+        if(pass.alive)
+        {
+        	score += 1; 
+        	this.label_score.text = score;
+        	pass.alive = false;
+        }
     },
 	//撞管子
     hit_pipe: function() {
@@ -64,6 +82,10 @@ var play_state = {
         this.pipes.forEachAlive(function(p){
             p.body.velocity.x = 0;
         }, this);
+        
+        this.passPipes.forEachAlive(function(p){
+            p.body.velocity.x = 0;
+        }, this);
 		this.dead_sound.play();
     },
 	//重新开始函数
@@ -72,11 +94,44 @@ var play_state = {
 		
         this.game.state.start('gameover');
     },
-
+    //增加穿过障碍得分点
+    add_one_passPipe: function(x, y) {
+        var passPipe = this.passPipes.getFirstDead();
+        if(!passPipe)
+        {
+        	passPipe = this.game.add.sprite(x, y, 'pipe');
+        	game.physics.arcade.enable(passPipe);
+        	this.passPipes.add(passPipe);
+        }
+        else
+        {
+        	passPipe.reset(x, y);
+        }
+        passPipe.width = 1;
+        passPipe.height = 120;
+        passPipe.body.velocity.x = -1*game.world.width/2; 
+        this.checkWorldBounds = true;
+        //passPipe.events.onEnterBounds = function(e) {
+        	
+        	this.outOfBoundsKill = true;
+        //}
+    },
+    
+	//增加障碍管道
     add_one_pipe: function(x, y) {
         var pipe = this.pipes.getFirstDead();
-        pipe.reset(x, y);
-        pipe.body.velocity.x = -200; 
+        if(!pipe)
+        {
+        	pipe = this.game.add.sprite(x, y, 'pipe');
+        	game.physics.arcade.enable(pipe);
+        	this.pipes.add(pipe);
+        }
+        else
+        {
+        	pipe.reset(x, y);
+        }
+        pipe.body.velocity.x = -1*game.world.width/2; 
+        pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
     },
 
@@ -95,10 +150,11 @@ var play_state = {
         {
         	this.holeIndex = hole;
         }
+        this.add_one_passPipe(game.world.width+70, this.holeIndex*60 );
         for (var i = 0; i < pipeNum; i++)
             if (i != this.holeIndex && i != this.holeIndex +1) 
-                this.add_one_pipe(game.world.width, i*60+10);   
-        score += 1; 
-        this.label_score.content = score;  
+                this.add_one_pipe(game.world.width, i*60);   
+        /*score += 1; 
+        this.label_score.text = score;  */
     },
 };
