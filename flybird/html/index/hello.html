@@ -1,31 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>   
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no">
-    <title>Fighting, flappy bird</title>
+	<title>飞翔吧，Bra</title>
 	<style>
-		* {
-			margin: 0;
-			padding: 0;
+	* {
+		padding: 0;
+		margin: 0;
+	}
+	html, body {
+		width: 100%;
+		height: 100%;
+	}
+    #game_div {
+      width: 100%;
+      height: 100%;
+    }
+		body{
+			background-image:url(/bird/image/birdbg.png);
 		}
-		html, body {
-			width: 100%;
-			height: 100%;
-		}
-	    #game_div{
-	      width: 100%;
-	      height: 100%;
-	    }
-  	</style>
+  </style>
 </head>
-
 <body>
-  	<div id="game_div"> </div>
-  	
-	<script type="text/javascript" src="/bird/js/phaser.min.js"></script>
-	<script type="text/javascript" src="/bird/js/main.js"></script>
-<body>
-
+	<div id="game_div"></div>
+	
+	<script type="text/javascript" src="/bird/js/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="/bird/js/phaser.min.js"></script>
+  <script type="text/javascript" src="/bird/js/load.js"></script>
+  <script type="text/javascript" src="/bird/js/menu.js"></script>
+  <script type="text/javascript" src="/bird/js/ready.js"></script>
+  <script type="text/javascript" src="/bird/js/play.js"></script>
+  <script type="text/javascript" src="/bird/js/gameover.js"></script>
+  <script type="text/javascript" src="/bird/js/game.js"></script> 
 </body>
 </html>
