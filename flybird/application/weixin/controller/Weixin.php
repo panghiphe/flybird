@@ -20,7 +20,7 @@ class Weixin extends Weixincore{
     }
     public function test(){
         session('hello','worldddddd');
-        print_($_SESSION);
+        print_r($_SESSION);
 
         echo 'nothing';
     }
