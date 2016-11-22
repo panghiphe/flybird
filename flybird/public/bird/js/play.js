@@ -23,6 +23,10 @@ var play_state = {
         this.passPipes = game.add.group();
         this.passPipes.createMultiple(3); 
         game.physics.arcade.enable(this.passPipes, true);
+        this.passPipes.forEach(function (p) {
+        	p.width = 1;
+        	p.height = 120;
+        });
         this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);           
 
         this.bird = this.game.add.sprite(100, 245, 'bird');
@@ -30,10 +34,19 @@ var play_state = {
         this.bird.body.gravity.y = 1000; 		//设置Bird重力属性,gravity
         this.bird.anchor.setTo(-0.2, 0.5);		//设置Bird重心
         
+        this.bras = game.add.group();
+        this.bras.createMultiple(3, 'diamond'); 
+        game.physics.arcade.enable(this.bras, true);
+        
         // Not 'this.score', but just 'score'
         score = 0; 
         var style = { font: "30px Arial", fill: "#ffffff" };
         this.label_score = this.game.add.text(20, 20, "0", style); 
+        //game.physics.arcade.enable(this.label_score);
+        this.score_box = this.game.add.sprite(20, 20);
+        game.physics.arcade.enable(this.score_box);
+        this.score_box.width = 50;
+        this.score_box.height = 50;
 
         this.jump_sound = this.game.add.audio('jump');		//加载音效
 		this.dead_sound = this.game.add.audio('dead');		//||
@@ -49,7 +62,9 @@ var play_state = {
             this.bird.angle += 1;
 
         this.game.physics.arcade.overlap(this.bird, this.pipes, this.hit_pipe, null, this); 
-        this.game.physics.arcade.overlap(this.bird, this.passPipes, this.pass_pipe, null, this);      
+        this.game.physics.arcade.overlap(this.bird, this.passPipes, this.pass_pipe, null, this); 
+        this.game.physics.arcade.overlap(this.bird, this.bras, this.collect_bra, null, this);
+        this.game.physics.arcade.overlap(this.score_box, this.bras, this.get_bra, null, this);
     },
 	//每次按下空格调用的函数
     jump: function() {
@@ -60,6 +75,26 @@ var play_state = {
         this.game.add.tween(this.bird).to({angle: -20}, 50).start();
         this.jump_sound.play();
     },
+    //收集bra
+    collect_bra: function(bird, bra) {
+    	if (this.bird.alive == false)
+            return;
+        if(bra.alive)
+        {
+        	score += 3; 
+        	bra.body.velocity.x = 0;
+        	this.game.physics.arcade.moveToObject(bra, this.label_score, 1000);
+        }
+    },
+    //将bra转移到分值
+    get_bra: function(label, bra) {
+        if(bra.alive)
+        {
+        	this.label_score.text = score;
+        	bra.kill();
+        	bra.alive = false;
+        }
+    },
     //通过管子
     pass_pipe: function(bird, pass) {
         if (this.bird.alive == false)
@@ -68,6 +103,7 @@ var play_state = {
         {
         	score += 1; 
         	this.label_score.text = score;
+        	pass.kill();
         	pass.alive = false;
         }
     },
@@ -86,6 +122,10 @@ var play_state = {
         this.passPipes.forEachAlive(function(p){
             p.body.velocity.x = 0;
         }, this);
+        
+        this.bras.forEachAlive(function(p){
+            p.body.velocity.x = 0;
+        }, this);
 		this.dead_sound.play();
     },
 	//重新开始函数
@@ -94,12 +134,15 @@ var play_state = {
 		
         this.game.state.start('gameover');
     },
+    
     //增加穿过障碍得分点
     add_one_passPipe: function(x, y) {
         var passPipe = this.passPipes.getFirstDead();
         if(!passPipe)
         {
-        	passPipe = this.game.add.sprite(x, y, 'pipe');
+        	passPipe = this.game.add.sprite(x, y);
+        	passPipe.width = 1;
+	        passPipe.height = 120;
         	game.physics.arcade.enable(passPipe);
         	this.passPipes.add(passPipe);
         }
@@ -107,14 +150,8 @@ var play_state = {
         {
         	passPipe.reset(x, y);
         }
-        passPipe.width = 1;
-        passPipe.height = 120;
+
         passPipe.body.velocity.x = -1*game.world.width/2; 
-        this.checkWorldBounds = true;
-        //passPipe.events.onEnterBounds = function(e) {
-        	
-        	this.outOfBoundsKill = true;
-        //}
     },
     
 	//增加障碍管道
@@ -134,6 +171,22 @@ var play_state = {
         pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
     },
+    
+    //增加可收集的bra
+    add_one_bra: function(x, y) {
+        var bra = this.bras.getFirstDead();
+        if(!bra)
+        {
+        	bra = this.game.add.sprite(x, y, 'diamond');
+        	game.physics.arcade.enable(bra);
+        	this.bras.add(bra);
+        }
+        else
+        {
+        	bra.reset(x, y);
+        }
+        bra.body.velocity.x = -1*game.world.width/2; 
+    },
 
     add_row_of_pipes: function() {
     	var pipeNum = Math.ceil(game.world.height / 60);
@@ -151,6 +204,7 @@ var play_state = {
         	this.holeIndex = hole;
         }
         this.add_one_passPipe(game.world.width+70, this.holeIndex*60 );
+        this.add_one_bra(game.world.width*(2*Math.round(Math.random())+10)/8, this.holeIndex*60 + (Math.round(Math.random())==1? -50:150) );
         for (var i = 0; i < pipeNum; i++)
             if (i != this.holeIndex && i != this.holeIndex +1) 
                 this.add_one_pipe(game.world.width, i*60);   
