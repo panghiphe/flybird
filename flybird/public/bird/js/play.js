@@ -21,10 +21,10 @@ var play_state = {
         game.physics.arcade.enable(this.pipes, true);
         
         this.passPipes = game.add.group();
-        this.passPipes.createMultiple(3); 
+        this.passPipes.createMultiple(3, 'pipe'); 
         game.physics.arcade.enable(this.passPipes, true);
         this.passPipes.forEach(function (p) {
-        	p.width = 1;
+        	p.width = 2;
         	p.height = 120;
         });
         this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);           
