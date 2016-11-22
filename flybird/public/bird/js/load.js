@@ -10,6 +10,7 @@ var load_state = {
         this.game.load.audio('jump', '/bird/image/jump.wav');
 		this.game.load.audio('dead','/bird/image/dead.wav');
 		this.game.load.image('gameover','/bird/image/gameover.png');
+		this.game.load.image('diamond','/bird/image/diamond.png');
     },
 
     create: function() {
