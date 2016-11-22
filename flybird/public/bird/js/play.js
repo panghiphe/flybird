@@ -79,8 +79,9 @@ var play_state = {
     collect_bra: function(bird, bra) {
     	if (this.bird.alive == false)
             return;
-        if(bra.alive)
+        if(!bra.isCount)
         {
+        	bra.isCount = true;
         	score += 3; 
         	bra.body.velocity.x = 0;
         	this.game.physics.arcade.moveToObject(bra, this.label_score, 1000);
@@ -99,6 +100,7 @@ var play_state = {
     pass_pipe: function(bird, pass) {
         if (this.bird.alive == false)
             return;
+        console.log(pass.alive);
         if(pass.alive)
         {
         	score += 1; 
