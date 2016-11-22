@@ -19,14 +19,12 @@ var play_state = {
         this.pipes = game.add.group();
         this.pipes.createMultiple(20, 'pipe'); 
         game.physics.arcade.enable(this.pipes, true);
-        
-        this.passPipes = game.add.group();
-        this.passPipes.createMultiple(3, 'pipe'); 
-        game.physics.arcade.enable(this.passPipes, true);
-        this.passPipes.forEach(function (p) {
-        	p.width = 2;
-        	p.height = 120;
+        this.pipes.forEach(function (p) {
+        	p.events.onKilled.add(function(){
+        		this.isScored = false;
+        	}, p);
         });
+        
         this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);           
 
         this.bird = this.game.add.sprite(100, 245, 'bird');
@@ -62,7 +60,8 @@ var play_state = {
             this.bird.angle += 1;
 
         this.game.physics.arcade.overlap(this.bird, this.pipes, this.hit_pipe, null, this); 
-        this.game.physics.arcade.overlap(this.bird, this.passPipes, this.pass_pipe, null, this); 
+        
+        this.pipes.forEachExists(this.pass_score,this); //分数检测和更新
         this.game.physics.arcade.overlap(this.bird, this.bras, this.collect_bra, null, this);
         this.game.physics.arcade.overlap(this.score_box, this.bras, this.get_bra, null, this);
     },
@@ -100,14 +99,23 @@ var play_state = {
     pass_pipe: function(bird, pass) {
         if (this.bird.alive == false)
             return;
-        console.log(pass.alive);
-        if(pass.alive)
+        if(!pass.isScored)
         {
         	score += 1; 
         	this.label_score.text = score;
         	pass.kill();
-        	pass.alive = false;
+        	pass.isScored = true;
         }
+    },
+    //通过管子积分
+    pass_score: function(pipe) {
+    	if(!pipe.isScored && pipe.y <= 0 && pipe.x < this.bird.x - this.bird.width/2 - pipe.width/2) {
+    		score += 1; 
+        	this.label_score.text = score;
+        	pipe.isScored = true;
+        	return true;
+    	}
+    	return false;
     },
 	//撞管子
     hit_pipe: function() {
@@ -119,10 +127,7 @@ var play_state = {
 
         this.pipes.forEachAlive(function(p){
             p.body.velocity.x = 0;
-        }, this);
-        
-        this.passPipes.forEachAlive(function(p){
-            p.body.velocity.x = 0;
+            p.isScored = false;
         }, this);
         
         this.bras.forEachAlive(function(p){
@@ -137,25 +142,6 @@ var play_state = {
         this.game.state.start('gameover');
     },
     
-    //增加穿过障碍得分点
-    add_one_passPipe: function(x, y) {
-        var passPipe = this.passPipes.getFirstDead();
-        if(!passPipe)
-        {
-        	passPipe = this.game.add.sprite(x, y);
-        	passPipe.width = 1;
-	        passPipe.height = 120;
-        	game.physics.arcade.enable(passPipe);
-        	this.passPipes.add(passPipe);
-        }
-        else
-        {
-        	passPipe.reset(x, y);
-        }
-
-        passPipe.body.velocity.x = -1*game.world.width/2; 
-    },
-    
 	//增加障碍管道
     add_one_pipe: function(x, y) {
         var pipe = this.pipes.getFirstDead();
@@ -163,12 +149,12 @@ var play_state = {
         {
         	pipe = this.game.add.sprite(x, y, 'pipe');
         	game.physics.arcade.enable(pipe);
+        	pipe.events.onKilled.add(function(){
+        		this.isScored = false;
+        	}, pipe);
         	this.pipes.add(pipe);
         }
-        else
-        {
-        	pipe.reset(x, y);
-        }
+        pipe.reset(x, y);
         pipe.body.velocity.x = -1*game.world.width/2; 
         pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
@@ -183,10 +169,7 @@ var play_state = {
         	game.physics.arcade.enable(bra);
         	this.bras.add(bra);
         }
-        else
-        {
-        	bra.reset(x, y);
-        }
+        bra.reset(x, y);
         bra.body.velocity.x = -1*game.world.width/2; 
     },
 
@@ -205,8 +188,7 @@ var play_state = {
         {
         	this.holeIndex = hole;
         }
-        this.add_one_passPipe(game.world.width+70, this.holeIndex*60 );
-        this.add_one_bra(game.world.width*(2*Math.round(Math.random())+10)/8, this.holeIndex*60 + (Math.round(Math.random())==1? -50:150) );
+        this.add_one_bra(game.world.width*(/*2*Math.round(Math.random())+10*/11)/8, this.holeIndex*60 + (Math.round(Math.random())==1? -50:130) );
         for (var i = 0; i < pipeNum; i++)
             if (i != this.holeIndex && i != this.holeIndex +1) 
                 this.add_one_pipe(game.world.width, i*60);   
