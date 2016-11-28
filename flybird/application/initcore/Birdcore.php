@@ -29,7 +29,7 @@ class Birdcore extends Controller{
 
     /*判断是否有openid 传输过来*/
     private function _checkOpenid(){
-        if(isset($_GET['openid'])){
+        if(isset($_GET['openid']) && is_string($_GET['openid'])){
             $openid = $_GET['openid'];
             $p = '/[a-zA-Z0-9\/\-]{12,}$/';
             if(preg_match($p,$openid)){
@@ -44,12 +44,12 @@ class Birdcore extends Controller{
 
     private function _loginRecord(){
         $openid = trim($_GET['openid']);
-        if(isset($_GET['nick_name']) && !empty($_GET['nick_name'])){   //用户昵称
+        if(isset($_GET['nick_name']) && !empty($_GET['nick_name']) && is_string($_GET['nick_name'])){   //用户昵称
             $nick_name = trim($_GET['nick_name']);
         }else{
             $nick_name = '';
         }
-        if(isset($_GET['portrait']) && !empty($_GET['portrait'])){  //用户头像
+        if(isset($_GET['portrait']) && !empty($_GET['portrait']) && is_string($_GET['portrait'])){  //用户头像
             $portrait = $_GET['portrait'];
         }else{
             $portrait = '/bird/image/bird_portrait.jpg';
