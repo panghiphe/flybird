@@ -19,7 +19,7 @@ class Applog
      */
     static public function appLog($dir, $data)
     {
-        $rootPath = rtrim(LY_LOG_PATH,'/','') . '/' . $dir;
+        $rootPath = rtrim(LY_LOG_PATH,'/') . '/' . $dir;
         if (!is_dir($rootPath)) {
             @mkdir($rootPath, 0777, true);
         }
