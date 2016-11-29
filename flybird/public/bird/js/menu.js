@@ -24,7 +24,29 @@ var menu_state={
 		gameName.anchor.setTo(0.5,0.5);
 		var text = this.game.add.text(x,y,"Touch to start!",style);		//定义显示文本变量,并在game.world显示，参数(坐标,显示文本,文本风格)
 		text.anchor.setTo(0.5,0.5);		//
-		  
+		
+		var rankBtn = this.game.add.button(x, y-180, "RANK", this.show_rank);
+		rankBtn.anchor.setTo(0.5,0.5);
+		rankBtn.tint = "0xdddddd";
+		rankBtn.width = 100;
+		rankBtn.height = 30;
+		rankBtn.input.touch.onTouchEnd = function(){
+            t.show_rank();
+        }
+		//rankBtn.texture = ""
+	},
+	show_rank: function() {
+		$.ajax({
+    		url: "/bird/game/rank",
+    		type: "post",
+    		dataType: "json",
+    		success: function(data) {
+    			
+    		},
+    		error: function() {
+    			
+    		}
+    	});
 	},
 	start:function(){
 		this.game.state.start('ready');		//调用start()函数后进入'ready'state
