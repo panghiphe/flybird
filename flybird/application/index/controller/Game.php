@@ -17,7 +17,7 @@ class Game extends Birdcore{
 
     public function play(){
         session('game_start_time',date("Y-m-d H:i:s"));
-        echo 'hello world~ game begin!';
+        return ['error' => '0', 'msg' => '游戏时间开始〜开搞!'];
     }
 
     //游戏结束 记录用户分数
