@@ -51,6 +51,8 @@ var play_state = {
 		
 		this.holeIndex = 1;  //保留当前通道的索引，避免相邻两个管道的通道上下距离太远而无法通过游戏，最好保持在上下1.5个通道高度的距离
 		
+		this.start_game();
+		
 		
     },
 
@@ -168,6 +170,7 @@ var play_state = {
             p.body.velocity.x = 0;
         }, this);
 		this.dead_sound.play();
+		this.end_game();
     },
 	//重新开始函数
     restart_game: function() {
