@@ -26,7 +26,7 @@ var menu_state={
 		text.anchor.setTo(0.5,0.5);		//
 		
 		var rankBtn = this.game.add.button(x, y-180, "RANK", this.show_rank);
-		  
+		rankBtn.anchor.setTo(0.5,0.5);
 	},
 	show_rank: function() {
 		$.ajax({
