@@ -10,6 +10,7 @@ namespace app\index\controller;
 
 
 use app\addon\Dbmysql;
+use app\index\Gamestat;
 use app\initcore\Birdcore;
 
 class Game extends Birdcore{
@@ -40,7 +41,7 @@ class Game extends Birdcore{
                 from bird_games_record g
                 left join bird_user_login u
                 on u.openid=g.openid
-                order by g.score desc limit 10";
+                order by g.score desc limit 20";
         $presql = $pdo->pdo->prepare($sql);
         $do = $presql->execute();
         if($do){
@@ -55,4 +56,15 @@ class Game extends Birdcore{
         }
 
     }//end func
+
+    //游戏统计数据 -- 管理员才可以用
+    public function gameStat(){
+        if(session('nick_name') != 'admin'){
+            exit('886');
+        }
+        $game = new Gamestat();
+        $game->stat();
+
+    }//end func
+
 }//end class
