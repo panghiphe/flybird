@@ -26,9 +26,35 @@ class Game extends Birdcore{
         $openid = session('openid');
         $portrait = session('portrait');
         $nickname = session('nick_name');
+        $beginTime = session('game_start_time');  //游戏开始时间
+        $endTime = Date("Y-m-d H:i:s"); //结束时间
+        $spendTime = strtotime($endTime) - strtotime($beginTime);
 
-        $sql = "insert into bird_games_record()
-                values()";
+        if($score ==0 || empty($openid) || empty($portrait) || empty($nickname)){
+            exit();
+        }
+
+        $pdo = Dbmysql::getInstance();
+        if($pdo->pdo == null){
+            return [];
+        }
+
+
+        $sql = "insert into bird_games_record(openid,score,play_begin_time,play_end_time,spend_time)
+                values(:openid,:score,:beginTime,:endTime,:spendTime)";
+        $presql = $pdo->pdo->prepare($sql);
+        $presql->bindValue(":openid",$openid);
+        $presql->bindValue(":score",$score);
+        $presql->bindValue(":beginTime",$beginTime);
+        $presql->bindValue(":endTime",$endTime);
+        $presql->bindValue(":spendTime",$spendTime);
+        $do = $presql->execute();
+        if($do){
+            return ['error' => '0', 'msg' => '游戏分数保存成功！'];
+        }else{
+
+            return ['error' => '10', 'msg' => '游戏分数保存失败鸟！'];
+        }
 
     }
     //游戏排名
