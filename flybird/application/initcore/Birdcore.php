@@ -11,7 +11,7 @@ namespace app\initcore;
 
 use app\addon\Dbmysql;
 use think\Controller;
-
+header("Content-type: text/html; charset=utf-8");
 class Birdcore extends Controller{
 
     public function _initialize()
