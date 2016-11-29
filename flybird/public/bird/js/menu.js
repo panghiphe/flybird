@@ -27,6 +27,10 @@ var menu_state={
 		
 		var rankBtn = this.game.add.button(x, y-180, "RANK", this.show_rank);
 		rankBtn.anchor.setTo(0.5,0.5);
+		rankBtn.tint = "0xdddddd";
+		rankBtn.width = 100;
+		rankBtn.height = 30;
+		//rankBtn.texture = ""
 	},
 	show_rank: function() {
 		$.ajax({

@@ -170,11 +170,11 @@ var play_state = {
             p.body.velocity.x = 0;
         }, this);
 		this.dead_sound.play();
-		this.end_game();
     },
 	//重新开始函数
     restart_game: function() {
         this.game.time.events.remove(this.timer);
+		this.end_game();
 		
         this.game.state.start('gameover');
     },
