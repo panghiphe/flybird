@@ -50,6 +50,8 @@ var play_state = {
 		this.dead_sound = this.game.add.audio('dead');		//||
 		
 		this.holeIndex = 1;  //保留当前通道的索引，避免相邻两个管道的通道上下距离太远而无法通过游戏，最好保持在上下1.5个通道高度的距离
+		
+		
     },
 
     update: function() {
@@ -64,6 +66,38 @@ var play_state = {
         this.pipes.forEachExists(this.pass_score,this); //分数检测和更新
         this.game.physics.arcade.overlap(this.bird, this.bras, this.collect_bra, null, this);
         this.game.physics.arcade.overlap(this.score_box, this.bras, this.get_bra, null, this);
+    },
+    //告诉后台游戏开始
+    start_game: function() {
+    	$.ajax({
+    		url: "/bird/game/start",
+    		type: "post",
+    		dataType: "json",
+    		success: function(data) {
+    			
+    		},
+    		error: function() {
+    			
+    		}
+    	});
+    },
+    //告诉后台游戏结束
+    end_game: function() {
+    	var postData = {
+    		score: score
+    	};
+    	$.ajax({
+    		url: "/bird/game/end",
+    		type: "post",
+    		data: postData,
+    		dataType: "json",
+    		success: function(data) {
+    			
+    		},
+    		error: function() {
+    			
+    		}
+    	});
     },
 	//每次按下空格调用的函数
     jump: function() {
