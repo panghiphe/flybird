@@ -31,7 +31,7 @@ class Game extends Birdcore{
         $spendTime = strtotime($endTime) - strtotime($beginTime);
 
         if($score ==0 || empty($openid) || empty($portrait) || empty($nickname)){
-            exit();
+            exit('886');
         }
 
         $pdo = Dbmysql::getInstance();
