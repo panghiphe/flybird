@@ -9,6 +9,7 @@
 namespace app\index\controller;
 
 
+use app\addon\Dbmysql;
 use app\initcore\Birdcore;
 
 class Game extends Birdcore{
@@ -17,4 +18,41 @@ class Game extends Birdcore{
         echo 'hello world~ game begin!';
     }
 
-}
+    //游戏结束 记录用户分数
+    public function end(){
+        $score = input('post.score',0,'int');  //获取游戏分数
+        $openid = session('openid');
+        $portrait = session('portrait');
+        $nickname = session('nick_name');
+
+        $sql = "insert into bird_games_record()
+                values()";
+
+    }
+    //游戏排名
+    public function rank(){
+        $pdo = Dbmysql::getInstance();
+        if($pdo->pdo === null){
+            return [];
+        }
+
+        $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
+                from bird_games_record g
+                left join bird_user_login u
+                on u.openid=g.openid
+                order by g.score desc limit 10";
+        $presql = $pdo->pdo->prepare($sql);
+        $do = $presql->execute();
+        if($do){
+            $result = $presql->fetchAll();
+            if(empty($result)){
+                return ['error' => 1,'msg' => '还没有人玩游戏哦，去玩第一个吧！'];
+            }else{
+                return ['error' => 0, 'msg' => '排名在此，谁与争锋！','rank' => $result];
+            }
+        }else{
+            return ['error' => 2,'msg' => '哎呀，获取排行信息超时了，稍候再点点呗！'];
+        }
+
+    }//end func
+}//end class
