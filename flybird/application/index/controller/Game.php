@@ -66,7 +66,7 @@ class Game extends Birdcore{
 
         $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
                 from bird_games_record g
-                inner join bird_user_login u
+                inner join (select DISTINCT openid,nick_name,user_portrait from bird_user_login) u
                 on u.openid=g.openid
                 order by g.score desc limit 20";
         $presql = $pdo->pdo->prepare($sql);
