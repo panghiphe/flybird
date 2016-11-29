@@ -74,12 +74,12 @@ class Game extends Birdcore{
         if($do){
             $result = $presql->fetchAll();
             if(empty($result)){
-                return json_encode(['error' => 1,'msg' => '还没有人玩游戏哦，去玩第一个吧！']);
+                return ['error' => 1,'msg' => '还没有人玩游戏哦，去玩第一个吧！'];
             }else{
-                return json_encode(['error' => 0, 'msg' => '排名在此，谁与争锋！','rank' => $result]);
+                return ['error' => 0, 'msg' => '排名在此，谁与争锋！','rank' => $result];
             }
         }else{
-            return json_encode(['error' => 2,'msg' => '哎呀，获取排行信息超时了，稍候再点点呗！']);
+            return ['error' => 2,'msg' => '哎呀，获取排行信息超时了，稍候再点点呗！'];
         }
 
     }//end func
