@@ -24,7 +24,7 @@ class Game extends Birdcore{
     public function end(){
         $score = input('post.score',0,'int');  //获取游戏分数
         $openid = session('openid');
-        $portrait = session('portrait');
+        $portrait = session('user_portrait');
         $nickname = session('nick_name');
         $beginTime = session('game_start_time');  //游戏开始时间
         $endTime = Date("Y-m-d H:i:s"); //结束时间
