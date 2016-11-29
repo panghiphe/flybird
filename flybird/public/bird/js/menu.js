@@ -30,9 +30,6 @@ var menu_state={
 		rankBtn.tint = "0xdddddd";
 		rankBtn.width = 100;
 		rankBtn.height = 30;
-		rankBtn.input.touch.onTouchEnd = function(){
-            t.show_rank();
-        }
 		//rankBtn.texture = ""
 	},
 	show_rank: function() {
