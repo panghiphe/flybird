@@ -11,29 +11,27 @@
 
 use think\Route;
 
-Route::group('bird',function(){
-    Route::group('game',function(){
+Route::group('bird', function () {
+    Route::group('game', function () {
         Route::rule('start', 'index/game/play');
     });
 });
 
 
-
-);
 return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-/*    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],*/
+    /*    '[hello]'     => [
+            ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+            ':name' => ['index/hello', ['method' => 'post']],
+        ],*/
 
 
-    '[bird]'   => [
-         'index'  =>  ['index/index/hello'],  // fly bird 首页
-         'wc'   =>  ['weixin/weixin/test'],  //微信测试
+    '[bird]' => [
+        'index' => ['index/index/hello'],  // fly bird 首页
+        'wc' => ['weixin/weixin/test'],  //微信测试
     ],
 
-    '/'   =>  '/index/index/hello',   //首页
+    '/' => '/index/index/hello',   //首页
 ];
