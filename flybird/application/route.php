@@ -9,6 +9,17 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+use think\Route;
+
+Route::group('bird',function(){
+    Route::group('game',function(){
+        Route::rule('start', 'index/game/play');
+    });
+});
+
+
+
+);
 return [
     '__pattern__' => [
         'name' => '\w+',
