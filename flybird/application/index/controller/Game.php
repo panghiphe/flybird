@@ -16,6 +16,7 @@ use app\initcore\Birdcore;
 class Game extends Birdcore{
 
     public function play(){
+        session('game_start_time',date("Y-m-d H:i:s"));
         echo 'hello world~ game begin!';
     }
 
