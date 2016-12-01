@@ -33,6 +33,16 @@ defined('ENV_PREFIX') or define('ENV_PREFIX', 'PHP_'); // 环境变量的配置�
 // 环境常量
 define('IS_CLI', PHP_SAPI == 'cli' ? true : false);
 define('IS_WIN', strpos(PHP_OS, 'WIN') !== false);
+// 环境常量
+define('IS_CGI', strpos(PHP_SAPI, 'cgi') === 0 ? 1 : 0);
+define('IS_MAC', strstr(PHP_OS, 'Darwin') ? 1 : 0);
+define('IS_AJAX', (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') ? true : false);
+define('NOW_TIME', $_SERVER['REQUEST_TIME']);
+define('REQUEST_METHOD', IS_CLI ? 'GET' : $_SERVER['REQUEST_METHOD']);
+define('IS_GET', REQUEST_METHOD == 'GET' ? true : false);
+define('IS_POST', REQUEST_METHOD == 'POST' ? true : false);
+define('IS_PUT', REQUEST_METHOD == 'PUT' ? true : false);
+define('IS_DELETE', REQUEST_METHOD == 'DELETE' ? true : false);
 
 // 载入Loader类
 require CORE_PATH . 'Loader.php';

@@ -9,19 +9,32 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
+use think\Route;
+
+Route::group('bird', function () {
+    Route::group('game', function () {
+        Route::rule('start', 'index/game/play');  // 开始游戏
+        Route::rule('end','index/game/end');   //游戏玩完
+        Route::rule('rank','index/game/rank');  // 游戏排名
+    });
+});
+
+Route::miss('index/index/world');    //空路由
 return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-/*    '[hello]'     => [
-        ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
-        ':name' => ['index/hello', ['method' => 'post']],
-    ],*/
+    /*    '[hello]'     => [
+            ':id'   => ['index/hello', ['method' => 'get'], ['id' => '\d+']],
+            ':name' => ['index/hello', ['method' => 'post']],
+        ],*/
 
 
-    '[bird]'   => [
-         'index'  =>  ['index/index/hello'],  // fly bird 首页
+    '[bird]' => [
+        'index' => ['index/index/hello'],  // fly bird 首页
+        'wc' => ['weixin/weixin/test'],  //微信测试
     ],
 
-    '/'   =>  '/index/index/hello',   //首页
+    '/' => '/index/index/hello',   //首页
+    '__miss__'  =>   'index/index/world',   //其它路由
 ];

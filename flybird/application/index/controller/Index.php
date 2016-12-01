@@ -14,4 +14,10 @@ class Index extends Birdcore
 
         return $this->fetch('hello');
     }
+
+
+
+    public function world(){
+        return 'hello little bird! welcome!';
+    }
 }

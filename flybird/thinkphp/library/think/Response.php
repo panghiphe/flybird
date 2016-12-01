@@ -307,7 +307,9 @@ class Response
                 '__toString',
             ])
             ) {
-                throw new \InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
+                print_r($content);
+                exit();
+                //throw new \InvalidArgumentException(sprintf('variable type error： %s', gettype($content)));
             }
 
             $this->content = (string) $content;

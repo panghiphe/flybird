@@ -1099,7 +1099,15 @@ class Request
                 if (is_scalar($data)) {
                     $data = (string) $data;
                 } else {
-                    throw new \InvalidArgumentException('variable type error：' . gettype($data));
+                    if(is_array($data)){
+                        $data = (string)json_encode($data);
+                    }else if(is_object($data)){
+                        $data = (string)json_encode($data);
+                    }else{
+                        $data = $data;
+                    }
+
+                   // throw new \InvalidArgumentException('variable type error：' . gettype($data));
                 }
         }
     }
