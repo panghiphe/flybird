@@ -29,7 +29,10 @@ class Woaap extends Birdcore
     protected $woaackeyApi = '/api/ackey?';    //WX中控系统获取ackey url
     protected $woapAccessTokenApi = '/api/accesstoken?';    //获取 access token api
 
-
+    public function _initialize()
+    {
+       //禁止运行core 的  要不就进入死循环了
+    }
 
     /**
      * 自动登录
