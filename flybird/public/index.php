@@ -19,10 +19,14 @@ define('APP_HTML_ROOT',APP_BIRD_ROOT.'/html/');  // html 文件夹
 //公众号  app_id
 define('WX_APP_ID','wx33c182aa7e4ad93c');
 //公众号  app_secret_key
-define('WX_APP_SECRET','60e8afbf3c40b459076118a997bdcae2');
+//define('WX_APP_SECRET','60e8afbf3c40b459076118a997bdcae2');
+define('WOA_APP_KEY','60625d1a7c03885ea28dc5f4fb430965');
 define('WX_AUTH_TOKEN','gzyzlapp');
 define('WX_ACCESS_TOKEN_TIME',7100);
 
+/**
+ * @Moonevil    APPID:wx33c182aa7e4ad93c    APPKEY：60625d1a7c03885ea28dc5f4fb430965    请查收
+ */
 //数据库配置
 define('MYSQL_DB_HOST','localhost');
 define('MYSQL_DB_NAME','drsoft');

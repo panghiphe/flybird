@@ -16,7 +16,8 @@ class Birdcore extends Controller{
 
     public function _initialize()
     {
-        $this->_checkOpenid();
+       // $this->_checkOpenid();
+        $this->woaapAutologin();
     }
 
     /*判断是否满足微信自动登录*/
@@ -24,6 +25,20 @@ class Birdcore extends Controller{
         if(isset($_GET['code'])){
             $wx = new \app\weixin\Weixinautologin();
             $wx->login();
+        }
+    }
+
+    /*使用woaap 系统提供的自动登录接口*/
+    protected function woaapAutologin(){
+        if(isset($_GET['code'])){
+            session('woaap_code',$_GET['code']);
+            $logs['info'] = '调到woa自动登录接口！';
+            $logs['code'] = $_GET['code'];
+            $logs['file'] = __FILE__;
+            $logs['line'] = __LINE__;
+            \app\addon\Applog::appLog('logs',$logs);
+            $woap = new \app\weixin\Woaap();
+            $woap->autologin();
         }
     }
 
