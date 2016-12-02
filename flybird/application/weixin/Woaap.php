@@ -30,10 +30,6 @@ class Woaap extends Birdcore
     protected $woapAccessTokenApi = '/api/accesstoken?';    //获取 access token api
 
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * 自动登录
@@ -70,7 +66,7 @@ class Woaap extends Birdcore
      * 获取用户 openid
      */
     public function getUserOpenid(){
-        $birdUrl = urlencode("http://www.dr-s.cn/bird/index");
+       // $birdUrl = urlencode("http://www.dr-s.cn/bird/index");
         $ackey = $this->getWoaAcKey();
         $code = session('woaap_code');
         $uri = $this->woaapUrl."/api/oauth2-accesstoken?ackey=$ackey&code=$code";
