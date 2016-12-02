@@ -54,7 +54,7 @@ class Woaap extends Birdcore
         }
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-        \app\addon\Applog::appLog('logs',['getackey' => $ret]);
+        \app\addon\Applog::appLog('logs',['getackey' => $ret,'file' => __FILE__,'line' => __LINE__]);
 
         if($ret['errcode'] == '0') {
             cache($memKey, $ret['ackey'], 7000);  //缓存 7000 秒
@@ -75,7 +75,7 @@ class Woaap extends Birdcore
         $uri = $this->woaapUrl."/api/oauth2-accesstoken?ackey=$ackey&code=$code";
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-        \app\addon\Applog::appLog('logs',['get_openid' => $ret]);
+        \app\addon\Applog::appLog('logs',['get_openid' => $ret,'file' => __FILE__,'line' => __LINE__]);
         if($ret['errcode'] == '0'){
             session('openid',$ret['openid']);
             $this->getUserInfo($ret['openid']);
@@ -109,7 +109,7 @@ class Woaap extends Birdcore
 
 
         $ret = json_decode($ret,true); // 解释JSON数据
-        \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret]);
+        \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret,'file' => __FILE__,'line' => __LINE__]);
         if($ret['errcode'] == '0') {
             cache($memKey, $ret['access_token'], WX_ACCESS_TOKEN_TIME);
             return $ret['access_token'];
@@ -128,7 +128,7 @@ class Woaap extends Birdcore
         $uri = $this->woaapUrl."/api/userinfo?ackey=$ackey&openid=$openid&lang=zh_CN&access_token=$accessToken";
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-        \app\addon\Applog::appLog('logs',['getuserinfo' => $ret]);
+        \app\addon\Applog::appLog('logs',['getuserinfo' => $ret,'file' => __FILE__,'line' => __LINE__]);
         if($ret['errcode'] == '0'){
             session('nick_name',$ret['nickname']);   //昵称
             session('user_portrait',$ret['headimgurl']);   //头像
