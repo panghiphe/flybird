@@ -74,7 +74,7 @@ class Woaap extends Birdcore
         $code = session('woaap_code');
         $uri = $this->woaapUrl."/api/oauth2-accesstoken?ackey=$ackey&code=$code";
         $result = $this->_http($uri);
-        $ret = json_decode($result);
+        $ret = json_decode($result,true);
         \app\addon\Applog::appLog('logs',['get_openid' => $ret]);
         if($ret['errcode'] == '0'){
             session('openid',$ret['openid']);
