@@ -80,7 +80,7 @@ class Mooncurl
      * @param string $config
      * @return multitype:string mixed
      */
-    public static function curlPost($url = '', $data = '', $config = '')
+    public  function curlPost($url = '', $data = '', $config = '')
     {
 
         if (is_string($url) && (stripos($url, 'http') === false)) {
@@ -107,6 +107,7 @@ class Mooncurl
         } else {
             self::$opt[CURLOPT_POSTFIELDS] = $data;
         }
+        //log 3
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
             'file' => __FILE__, 'line' => __LINE__
         ]);
@@ -116,12 +117,14 @@ class Mooncurl
                 'Content-Length: ' . strlen($data)
             ];
         }
+        // log 4
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
             'file' => __FILE__, 'line' => __LINE__
         ]);
         if (is_array($config)) {
             array_merge(self::$opt, $config);
         }
+        // log 5
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
             'file' => __FILE__, 'line' => __LINE__
         ]);

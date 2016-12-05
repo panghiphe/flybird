@@ -82,7 +82,9 @@ class Game extends Birdcore{
         $data['cur_date'] = $now_time;
         $data['avtivity_str'] = $activity_str;
 
-        $ret = Mooncurl::curlPost($apiurl.$uri,$data);
+       // $ret = Mooncurl::curlPost($apiurl.$uri,$data);
+        $curl = new Mooncurl();
+        $ret = $curl->curlPost($apiurl.$uri,$data);
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '调用商城积分接口','result' => $ret,
             'file' => __FILE__, 'line' => __LINE__, 'send_data' => $data
         ]);
