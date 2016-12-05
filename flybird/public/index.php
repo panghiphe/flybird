@@ -37,6 +37,9 @@ define('MYSQL_DB_PASS','drs');
 define('MYSQL_DB_PORT',3306);
 
 define('LY_LOG_PATH',APP_BIRD_ROOT.'/log/');
+
+define('API_CONNECT_TIMEOUT',25);
+define('API_RETURN_TIMEOUT',25);
 // 定义应用目录
 define('APP_PATH', __DIR__ . '/../application/');
 // 加载框架引导文件

@@ -32,9 +32,6 @@ class Mooncurl
 
     static private function exec()
     {
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '你大爷到1',
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
         $ch = curl_init();
         curl_setopt_array($ch, self::$opt);
         $data = curl_exec($ch);
@@ -80,7 +77,7 @@ class Mooncurl
      * @param string $config
      * @return multitype:string mixed
      */
-    public  function curlPost($url = '', $data = '', $config = '')
+    public static function curlPost($url = '', $data = '', $config = '')
     {
 
         if (is_string($url) && (stripos($url, 'http') === false)) {
@@ -88,9 +85,6 @@ class Mooncurl
             return;
             //$url = APP_SERV_ROUTE . $url;
         }
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
         self::$opt[CURLOPT_POST] = 1;
         self::$opt[CURLOPT_URL] = $url;
         if (is_array($data) && !empty($data)) {
@@ -107,31 +101,15 @@ class Mooncurl
         } else {
             self::$opt[CURLOPT_POSTFIELDS] = $data;
         }
-        //log 3
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
         if (is_string($data) && !empty($data)) {
             self::$opt[CURLOPT_HTTPHEADER] = [
                 'Content-Type: application/json; charset=utf-8',
                 'Content-Length: ' . strlen($data)
             ];
         }
-        // log 4
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
         if (is_array($config)) {
             array_merge(self::$opt, $config);
         }
-        // log 5
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
-
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹艹', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__
-        ]);
         try {
             return self::exec();
 
