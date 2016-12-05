@@ -66,6 +66,9 @@ class Game extends Birdcore{
      * @return array
      */
     private function _addGameScoreToWoaap($score){
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到这','score' => $score,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
         $apiurl = 'http://dslrweishop.woaap.com';   //正式环境
         $uri = '/Activity/postUserIntegByActivity';
 

@@ -112,7 +112,8 @@ class Woaap extends Birdcore
 
 
         $ret = json_decode($ret,true); // 解释JSON数据
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret,'apiurl' => $url,'file' => __FILE__,'line' => __LINE__]);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret,'apiurl' => $url,
+            'file' => __FILE__,'line' => __LINE__]);
         if($ret['errcode'] == '0') {
             cache($memKey, $ret['access_token'], WX_ACCESS_TOKEN_TIME);
             return $ret['access_token'];
