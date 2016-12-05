@@ -17,7 +17,8 @@ class Birdcore extends Controller{
     public function _initialize()
     {
        // $this->_checkOpenid();
-        $this->woaapAutologin();
+      //  $this->woaapAutologin();
+        $this->_loginFromPc();
     }
 
     /*判断是否满足微信自动登录*/
@@ -57,7 +58,23 @@ class Birdcore extends Controller{
            // exit('886');
         }
     }//end func
+    /**
+     * 使用pc 测试时使用
+     * 使用参数调用
+     */
+    private function _loginFromPc(){
+        $openid = trim($_GET['ooo']);
+        $nick_name = trime($_GET['name']);
+        session('login',true);
+        session('nick_name',$nick_name);
+        session('openid',$openid);
+        session('user_portrait','/bird/image/bird_portrait.jpg');
+    }
 
+    /**
+     * 调用微信自运登录的
+     * @return bool|void
+     */
     private function _loginRecord(){
         $openid = session('openid') ? session('openid') : '';
 
