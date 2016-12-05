@@ -31,7 +31,7 @@ class Mooncurl
             self::$curl = curl_init();
     }
 
-    private static function exec ()
+    private  function exec ()
     {
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到1',
             'file' => __FILE__, 'line' => __LINE__
