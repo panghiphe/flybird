@@ -76,7 +76,7 @@ class Woaap extends Birdcore
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
         \app\addon\Applog::appLog('logs',['get_openid' => $ret,'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
-        if($ret['errcode'] == '0'){
+        if(isset($ret['openid'])){
             session('openid',$ret['openid']);
             $this->getUserInfo($ret['openid']);
            // return $ret['openid'];
@@ -129,7 +129,7 @@ class Woaap extends Birdcore
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
         \app\addon\Applog::appLog('logs',['getuserinfo' => $ret,'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
-        if($ret['errcode'] == '0'){
+        if(isset($ret['nickname'])){
             session('nick_name',$ret['nickname']);   //昵称
             session('user_portrait',$ret['headimgurl']);   //头像
         }else{
