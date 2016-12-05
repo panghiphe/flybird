@@ -12,6 +12,7 @@ namespace app\index\controller;
 use app\addon\Dbmysql;
 use app\index\Gamestat;
 use app\initcore\Birdcore;
+use app\addon\Mooncurl;
 
 class Game extends Birdcore{
 
@@ -50,6 +51,8 @@ class Game extends Birdcore{
         $presql->bindValue(":spendTime",$spendTime);
         $do = $presql->execute();
         if($do){
+            //在这里加个向商城加积分的接口
+            $this->_addGameScoreToWoaap($score);
             return ['error' => '0', 'msg' => '游戏分数保存成功！'];
         }else{
 
@@ -57,6 +60,34 @@ class Game extends Birdcore{
         }
 
     }
+    /**
+     * 调用商城积分接口
+     * 增加游戏积分
+     * @return array
+     */
+    private function _addGameScoreToWoaap($score){
+        $apiurl = 'http://dslrweishop.woaap.com';   //正式环境
+        $uri = '/Activity/postUserIntegByActivity';
+
+        $activity_name = 'dslr_bra_city';
+        $activity_no = 'c6489851300d951760f52800481cb0f5';
+        $now_time = time();
+
+        $activity_str = md5($activity_no) + md5($activity_name) + md5($now_time);
+        $activity_str = sha1($activity_str);
+
+        $data['openid'] = session('openid');
+        $data['integ'] = $score;
+        $data['avtivity_name'] = $activity_name;
+        $data['cur_date'] = $now_time;
+        $data['avtivity_str'] = $activity_str;
+
+        $ret = Mooncurl::curlPost($apiurl.$uri,$data);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '调用商城积分接口','result' => $ret,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
+    }
+
     //游戏排名
     public function rank(){
         $pdo = Dbmysql::getInstance();
