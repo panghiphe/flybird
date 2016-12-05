@@ -84,10 +84,13 @@ class Mooncurl
     {
 
         if (is_string($url) && (stripos($url, 'http') === false)) {
-            BIRD_APP_DEBUG && Applog::appLog('logs', ['curl-url' => $url]);
+            BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['curl-url' => $url]);
             return;
             //$url = APP_SERV_ROUTE . $url;
         }
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
         self::$opt[CURLOPT_POST] = 1;
         self::$opt[CURLOPT_URL] = $url;
         if (is_array($data) && !empty($data)) {
