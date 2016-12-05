@@ -63,12 +63,15 @@ class Birdcore extends Controller{
      * 使用参数调用
      */
     private function _loginFromPc(){
-        $openid = trim($_GET['ooo']);
-        $nick_name = trim($_GET['name']);
-        session('login',true);
-        session('nick_name',$nick_name);
-        session('openid',$openid);
-        session('user_portrait','/bird/image/bird_portrait.jpg');
+        if(isset($_GET['ooo']) && isset($_GET['name'])){
+            $openid = trim($_GET['ooo']);
+            $nick_name = trim($_GET['name']);
+            session('login',true);
+            session('nick_name',$nick_name);
+            session('openid',$openid);
+            session('user_portrait','/bird/image/bird_portrait.jpg');
+
+        }
     }
 
     /**
