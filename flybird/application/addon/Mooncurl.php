@@ -94,7 +94,16 @@ class Mooncurl
         self::$opt[CURLOPT_POST] = 1;
         self::$opt[CURLOPT_URL] = $url;
         if (is_array($data) && !empty($data)) {
-            self::$opt[CURLOPT_POSTFIELDS] = http_build_query($data);
+            try{
+                self::$opt[CURLOPT_POSTFIELDS] = http_build_query($data);
+
+            }catch (\Exception $e){
+                BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹出错', 'data' => $data,
+                    'file' => __FILE__, 'line' => __LINE__,'err' => $e->getMessage()
+                ]);
+                self::$opt[CURLOPT_POSTFIELDS] = $data;
+            }
+
         } else {
             self::$opt[CURLOPT_POSTFIELDS] = $data;
         }
