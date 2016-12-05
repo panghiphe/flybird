@@ -64,7 +64,7 @@ class Birdcore extends Controller{
      */
     private function _loginFromPc(){
         $openid = trim($_GET['ooo']);
-        $nick_name = trime($_GET['name']);
+        $nick_name = trim($_GET['name']);
         session('login',true);
         session('nick_name',$nick_name);
         session('openid',$openid);
