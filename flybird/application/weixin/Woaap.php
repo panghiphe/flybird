@@ -38,8 +38,10 @@ class Woaap extends Birdcore
      * 自动登录
      */
     public function autologin(){
-        $this->getUserOpenid();
+        $this->getUserOpenid();   //获取用户openid
+
     }
+
     /**
      * 获取 ackey
      */
@@ -75,13 +77,14 @@ class Woaap extends Birdcore
         $uri = $this->woaapUrl."/api/oauth2-accesstoken?ackey=$ackey&code=$code";
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-        \app\addon\Applog::appLog('logs',['get_openid' => $ret,'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['get_openid' => $ret,
+            'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         if(isset($ret['openid'])){
             session('openid',$ret['openid']);
-            $this->getUserInfo($ret['openid']);
-           // return $ret['openid'];
+            $this->getUserInfo($ret['openid']);   //通过openid 获取用户昵称 头像
         }else{
-           // return null;
+            \app\addon\Applog::appLog('logs',['get_openid' => $ret,
+            'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         }
     }//end
 
@@ -109,7 +112,7 @@ class Woaap extends Birdcore
 
 
         $ret = json_decode($ret,true); // 解释JSON数据
-        \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret,'apiurl' => $url,'file' => __FILE__,'line' => __LINE__]);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['getwoa_access_token' => $ret,'apiurl' => $url,'file' => __FILE__,'line' => __LINE__]);
         if($ret['errcode'] == '0') {
             cache($memKey, $ret['access_token'], WX_ACCESS_TOKEN_TIME);
             return $ret['access_token'];
@@ -128,7 +131,7 @@ class Woaap extends Birdcore
         $uri = $this->woaapUrl."/api/userinfo?ackey=$ackey&openid=$openid&lang=zh_CN&access_token=$accessToken";
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-        \app\addon\Applog::appLog('logs',['getuserinfo' => $ret,'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['getuserinfo' => $ret,'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         if(isset($ret['nickname'])){
             session('nick_name',$ret['nickname']);   //昵称
             session('user_portrait',$ret['headimgurl']);   //头像

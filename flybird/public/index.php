@@ -16,6 +16,8 @@ ini_set('session.name', 'helloseemybrafly');
 define('APP_BIRD_ROOT',dirname(__DIR__));  //站点根目录  index.php 文件的上级目录
 define('APP_HTML_ROOT',APP_BIRD_ROOT.'/html/');  // html 文件夹
 
+define('BIRD_APP_DEBUG',true);  //调试模式
+
 //公众号  app_id
 define('WX_APP_ID','wx33c182aa7e4ad93c');
 //公众号  app_secret_key

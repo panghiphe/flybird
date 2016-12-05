@@ -58,17 +58,17 @@ class Birdcore extends Controller{
     }//end func
 
     private function _loginRecord(){
-        $openid = trim($_GET['openid']);
-        if(isset($_GET['nick_name']) && !empty($_GET['nick_name']) && is_string($_GET['nick_name'])){   //用户昵称
-            $nick_name = trim($_GET['nick_name']);
-        }else{
-            $nick_name = '';
+        $openid = session('openid') ? session('openid') : '';
+
+
+        //用户昵称
+        $nick_name = session('nick_name') ? session('nick_name') : '';
+        if(empty($openid) || empty($nick_name)){
+            return ;
         }
-        if(isset($_GET['portrait']) && !empty($_GET['portrait']) && is_string($_GET['portrait'])){  //用户头像
-            $portrait = $_GET['portrait'];
-        }else{
-            $portrait = '/bird/image/bird_portrait.jpg';
-        }
+        //用户头像
+        $portrait = session('user_portrait') ? session('user_portrait') : '/bird/image/bird_portrait.jpg';
+
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo === null) return false;
 
@@ -81,9 +81,6 @@ class Birdcore extends Controller{
         $do = $presql->execute();
         if($do){  //保存成功
             session('login',true);
-            session('nick_name',$nick_name);
-            session('user_portrait',$portrait);
-            session('openid',$openid);
         }else{
             // 数据库错误
             $err['info'] = '保存用户登录出错!';
