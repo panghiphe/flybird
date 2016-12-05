@@ -9,6 +9,8 @@
 
 namespace app\addon;
 
+use think\App;
+
 class Mooncurl
 {
 
@@ -79,6 +81,7 @@ class Mooncurl
     public static function curlPost ($url = '', $data = '', $config = '')
     {
         if (is_string($url) && (stripos($url, 'http') === false)) {
+            BIRD_APP_DEBUG && Applog::appLog('logs',['curl-url' => $url]);
             return ;
             //$url = APP_SERV_ROUTE . $url;
         }
