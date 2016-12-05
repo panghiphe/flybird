@@ -33,6 +33,9 @@ class Mooncurl
 
     private static function exec ()
     {
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到1',
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
         $ch = curl_init();
         curl_setopt_array($ch, self::$opt);
         $data = curl_exec($ch);
@@ -80,6 +83,10 @@ class Mooncurl
      */
     public static function curlPost ($url = '', $data = '', $config = '')
     {
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到这2','data' => $data,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
+
         if (is_string($url) && (stripos($url, 'http') === false)) {
             BIRD_APP_DEBUG && Applog::appLog('logs',['curl-url' => $url]);
             return ;
