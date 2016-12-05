@@ -8,8 +8,7 @@
  */
 
 namespace app\addon;
-
-use think\App;
+use app\addon\Applog;
 
 class Mooncurl
 {
