@@ -107,15 +107,24 @@ class Mooncurl
         } else {
             self::$opt[CURLOPT_POSTFIELDS] = $data;
         }
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
         if (is_string($data) && !empty($data)) {
             self::$opt[CURLOPT_HTTPHEADER] = [
                 'Content-Type: application/json; charset=utf-8',
                 'Content-Length: ' . strlen($data)
             ];
         }
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
         if (is_array($config)) {
             array_merge(self::$opt, $config);
         }
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹1212', 'data' => $data,
+            'file' => __FILE__, 'line' => __LINE__
+        ]);
 
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹艹', 'data' => $data,
             'file' => __FILE__, 'line' => __LINE__
