@@ -4,7 +4,7 @@
  * User: moon
  * Date: 2016/12/5
  * Time: 下午3:40
- *  @author ly-chengminbin
+ * @author ly-chengminbin
  */
 
 namespace app\addon;
@@ -25,15 +25,15 @@ class Mooncurl
 
     private static $curl = null;
 
-    private static function init ()
+    private static function init()
     {
         if (self::$curl == null)
             self::$curl = curl_init();
     }
 
-    private  function exec ()
+    static private function exec()
     {
-        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到1',
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '你大爷到1',
             'file' => __FILE__, 'line' => __LINE__
         ]);
         $ch = curl_init();
@@ -48,8 +48,8 @@ class Mooncurl
         ];
         curl_close($ch);
         if ($data === false) { // 执行错误
-           Applog::appLog('curl-error', $curl_err);
-            return ['error' => '33' ,'errormessage' => '请求失败，请稍候重试哦！'];
+            Applog::appLog('curl-error', $curl_err);
+            return ['error' => '33', 'errormessage' => '请求失败，请稍候重试哦！'];
         } else {
             if (BIRD_APP_DEBUG) {
                 $log_curl = [
@@ -81,22 +81,22 @@ class Mooncurl
      * @param string $config
      * @return multitype:string mixed
      */
-    public static function curlPost ($url = '', $data = '', $config = '')
+    public static function curlPost($url = '', $data = '', $config = '')
     {
 
         if (is_string($url) && (stripos($url, 'http') === false)) {
-            BIRD_APP_DEBUG && Applog::appLog('logs',['curl-url' => $url]);
-            return ;
+            BIRD_APP_DEBUG && Applog::appLog('logs', ['curl-url' => $url]);
+            return;
             //$url = APP_SERV_ROUTE . $url;
         }
         self::$opt[CURLOPT_POST] = 1;
         self::$opt[CURLOPT_URL] = $url;
-        if (is_array($data) && ! empty($data)) {
+        if (is_array($data) && !empty($data)) {
             self::$opt[CURLOPT_POSTFIELDS] = http_build_query($data);
         } else {
             self::$opt[CURLOPT_POSTFIELDS] = $data;
         }
-        if (is_string($data) && ! empty($data)) {
+        if (is_string($data) && !empty($data)) {
             self::$opt[CURLOPT_HTTPHEADER] = [
                 'Content-Type: application/json; charset=utf-8',
                 'Content-Length: ' . strlen($data)
@@ -105,11 +105,16 @@ class Mooncurl
         if (is_array($config)) {
             array_merge(self::$opt, $config);
         }
-        try{
+
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹艹', 'data' => $data,
+            'file' => __FILE__, 'line' => __LINE__,
+            'error' => $e->getMessage()
+        ]);
+        try {
             return self::exec();
 
-        }catch (\Exception $e){
-            BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['info' => '你大爷到这2','data' => $data,
+        } catch (\Exception $e) {
+            BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '你大爷出错了', 'data' => $data,
                 'file' => __FILE__, 'line' => __LINE__,
                 'error' => $e->getMessage()
             ]);
@@ -125,7 +130,7 @@ class Mooncurl
      * @param string $data
      * @param string $config
      */
-    public function curlGet ($url = '', $data = '', $config = '')
+    public function curlGet($url = '', $data = '', $config = '')
     {
         if (is_string($url) && (stripos($url, 'http') === false)) {
             $url = APP_SERV_ROUTE . $url;
@@ -140,7 +145,7 @@ class Mooncurl
         if (BIRD_APP_DEBUG) {
             $log['curl_url'] = $url;
             $log['curl_opts'] = self::$opt;
-            Applog::appLog('curl-log',$log);
+            Applog::appLog('curl-log', $log);
         }
         return $this->exec();
     } // end function
