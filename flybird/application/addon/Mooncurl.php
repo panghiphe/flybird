@@ -107,8 +107,7 @@ class Mooncurl
         }
 
         BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs', ['info' => '艹艹', 'data' => $data,
-            'file' => __FILE__, 'line' => __LINE__,
-            'error' => $e->getMessage()
+            'file' => __FILE__, 'line' => __LINE__
         ]);
         try {
             return self::exec();
