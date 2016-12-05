@@ -39,6 +39,7 @@ class Birdcore extends Controller{
             \app\addon\Applog::appLog('logs',$logs);
             $woap = new \app\weixin\Woaap();
             $woap->autologin();
+            $this->_loginRecord();
         }
     }
 
