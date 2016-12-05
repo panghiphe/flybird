@@ -69,16 +69,17 @@ class Birdcore extends Controller{
         }
         //用户头像
         $portrait = session('user_portrait') ? session('user_portrait') : '/bird/image/bird_portrait.jpg';
-
+        $ip = getClientIP();
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo === null) return false;
 
-        $sql  = "insert into bird_user_login (nick_name,openid,user_portrait)
-                 values(:nick_name,:openid,:user_portrait)";
+        $sql  = "insert into bird_user_login (nick_name,openid,user_portrait,login_ip)
+                 values(:nick_name,:openid,:user_portrait,:ip)";
         $presql = $pdo->pdo->prepare($sql);
         $presql->bindValue(":nick_name",$nick_name);
         $presql->bindValue(":openid",$openid);
         $presql->bindValue(":user_portrait",$portrait);
+        $presql->bindValue(":ip",$ip);
         $do = $presql->execute();
         if($do){  //保存成功
             session('login',true);
