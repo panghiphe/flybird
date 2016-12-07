@@ -16,7 +16,9 @@ class Birdcore extends Controller{
 
     public function _initialize()
     {
-        $this->_checkOpenid();
+       // $this->_checkOpenid();
+      //  $this->woaapAutologin();
+        $this->_loginFromPc();
     }
 
     /*判断是否满足微信自动登录*/
@@ -24,6 +26,21 @@ class Birdcore extends Controller{
         if(isset($_GET['code'])){
             $wx = new \app\weixin\Weixinautologin();
             $wx->login();
+        }
+    }
+
+    /*使用woaap 系统提供的自动登录接口*/
+    protected function woaapAutologin(){
+        if(isset($_GET['code'])){
+            session('woaap_code',$_GET['code']);
+            $logs['info'] = '调到woa自动登录接口！';
+            $logs['code'] = $_GET['code'];
+            $logs['file'] = __FILE__;
+            $logs['line'] = __LINE__;
+            \app\addon\Applog::appLog('logs',$logs);
+            $woap = new \app\weixin\Woaap();
+            $woap->autologin();
+            $this->_loginRecord();
         }
     }
 
@@ -41,34 +58,51 @@ class Birdcore extends Controller{
            // exit('886');
         }
     }//end func
+    /**
+     * 使用pc 测试时使用
+     * 使用参数调用
+     */
+    private function _loginFromPc(){
+        if(isset($_GET['ooo']) && isset($_GET['name'])){
+            $openid = trim($_GET['ooo']);
+            $nick_name = trim($_GET['name']);
+            session('login',true);
+            session('nick_name',$nick_name);
+            session('openid',$openid);
+            session('user_portrait','/bird/image/bird_portrait.jpg');
 
+        }
+    }
+
+    /**
+     * 调用微信自运登录的
+     * @return bool|void
+     */
     private function _loginRecord(){
-        $openid = trim($_GET['openid']);
-        if(isset($_GET['nick_name']) && !empty($_GET['nick_name']) && is_string($_GET['nick_name'])){   //用户昵称
-            $nick_name = trim($_GET['nick_name']);
-        }else{
-            $nick_name = '';
+        $openid = session('openid') ? session('openid') : '';
+
+
+        //用户昵称
+        $nick_name = session('nick_name') ? session('nick_name') : '';
+        if(empty($openid) || empty($nick_name)){
+            return ;
         }
-        if(isset($_GET['portrait']) && !empty($_GET['portrait']) && is_string($_GET['portrait'])){  //用户头像
-            $portrait = $_GET['portrait'];
-        }else{
-            $portrait = '/bird/image/bird_portrait.jpg';
-        }
+        //用户头像
+        $portrait = session('user_portrait') ? session('user_portrait') : '/bird/image/bird_portrait.jpg';
+        $ip = getClientIP();
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo === null) return false;
 
-        $sql  = "insert into bird_user_login (nick_name,openid,user_portrait)
-                 values(:nick_name,:openid,:user_portrait)";
+        $sql  = "insert into bird_user_login (nick_name,openid,user_portrait,login_ip)
+                 values(:nick_name,:openid,:user_portrait,:ip)";
         $presql = $pdo->pdo->prepare($sql);
         $presql->bindValue(":nick_name",$nick_name);
         $presql->bindValue(":openid",$openid);
         $presql->bindValue(":user_portrait",$portrait);
+        $presql->bindValue(":ip",$ip);
         $do = $presql->execute();
         if($do){  //保存成功
             session('login',true);
-            session('nick_name',$nick_name);
-            session('user_portrait',$portrait);
-            session('openid',$openid);
         }else{
             // 数据库错误
             $err['info'] = '保存用户登录出错!';

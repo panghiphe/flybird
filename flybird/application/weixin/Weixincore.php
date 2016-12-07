@@ -20,6 +20,11 @@ class Weixincore extends Birdcore
     private $_AppID = WX_APP_ID;
     private $_AppSecret = WX_APP_SECRET;
 
+    protected $PwoaapUrl = 'http://www.woaap.com';
+    protected $PwoapackeyApi = '/api/ackey?';    //WX中控系统获取ackey url
+    protected $pwoapAccessTokenApi = '/api/accesstoken?';    //获取 access token api
+
+
     public function __construct()
     {
         parent::__construct();
