@@ -20,7 +20,7 @@ var menu_state={
 			}
 			else if(isPointInBounds(evPos, t.ruleBtn.getBounds()))
 			{
-				alert("rule");
+				$("#rule-dlg").fadeIn("fast");
 			}
             
         }
@@ -66,7 +66,19 @@ var menu_state={
 		//$(".opt-btn-con").fadeIn();
 	},
 	show_rank: function() {
-		alert("rank");
+		$("#rank-dlg").fadeIn("fast");
+		$.ajax({
+    		url: "/bird/game/rank",
+    		type: "post",
+    		dataType: "json",
+    		success: function(data) {
+    			
+    		},
+    		error: function() {
+    			
+    		}
+    	});
+	},
 	},
 	start:function(){
 		this.game.state.start('ready');		//调用start()函数后进入'ready'state
