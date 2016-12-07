@@ -69,12 +69,14 @@ class Birdcore extends Controller{
             session('nick_name',$nick_name);
             session('openid',$openid);
             session('user_portrait','/bird/image/bird_portrait.jpg');
-
+            $this->_loginRecord();
         }
     }
 
     /**
-     * 调用微信自运登录的
+     * 保存用户登录记录
+     * 所需三个参数
+     * session的, openid ,nick_name, user_portrait
      * @return bool|void
      */
     private function _loginRecord(){
