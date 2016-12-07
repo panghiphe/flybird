@@ -81,7 +81,7 @@ class Game extends Birdcore{
             $do = $presql->execute();   //执行
             if($do){
                 $result = $presql->fetchAll();
-                return isset($result[0]['score'])?$result[0]['score']: '0';
+                return isset($result[0]['SCORE'])?$result[0]['SCORE']: '0';
 
             }else{
                 Applog::appLog('error',['info' => '查询用户历史最高分出错,sql 执行失败',
