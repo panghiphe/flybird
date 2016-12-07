@@ -79,7 +79,6 @@ var menu_state={
     		}
     	});
 	},
-	},
 	start:function(){
 		this.game.state.start('ready');		//调用start()函数后进入'ready'state
 	}
