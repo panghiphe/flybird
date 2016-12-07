@@ -11,3 +11,16 @@ $(document).ready(function(){
 	
 	game.state.start('load');
 });
+
+function isPointInBounds(point, bounds) {
+	if(!point || !bounds)
+	{
+		return false;
+	}
+	if(point.x >= bounds.x && point.x <= bounds.x + bounds.width &&
+	   point.y >= bounds.y && point.y <= bounds.y + bounds.height)
+	{
+		return true;
+	}
+	return false;
+}
