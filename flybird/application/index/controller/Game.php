@@ -44,7 +44,7 @@ class Game extends Birdcore{
             return [];
         }
 
-
+        //增加游戏记录
         $sql = "insert into bird_games_record(openid,score,play_begin_time,play_end_time,spend_time)
                 values(:openid,:score,:beginTime,:endTime,:spendTime)";
         $presql = $pdo->pdo->prepare($sql);
@@ -53,11 +53,24 @@ class Game extends Birdcore{
         $presql->bindValue(":beginTime",$beginTime);
         $presql->bindValue(":endTime",$endTime);
         $presql->bindValue(":spendTime",$spendTime);
+
+        //增加分享链接
+        $shareSql = "insert into bird_games_share(openid,score,max_score)
+                      values(:openid,:score,:max_score);";
+        $preShareSql = $pdo->pdo->prepare($shareSql);
+        $preShareSql->bindValue(":openid",$openid);
+        $preShareSql->bindValue(":score",$score);
+        $preShareSql->bindValue(":max_score",$maxscore);
         $do = $presql->execute();
-        if($do){
+        $doShare = $preShareSql->execute();
+
+        if($do && $doShare){
             //在这里加个向商城加积分的接口
             $this->_addGameScoreToWoaap($score);
-            return ['error' => '0', 'max' => $maxscore, 'msg' => '游戏分数保存成功！'];
+
+            $shareid = $pdo->pdo->lastInsertId();
+            $url = 'http://www.dr-s.cn/bird/game/share/id/'.$shareid;
+            return ['error' => '0', 'max' => $maxscore, 'msg' => '游戏分数保存成功！','shareUrl' => $url];
         }else{
 
             return ['error' => '10', 'max' => '0', 'msg' => '游戏分数保存失败鸟！'];
@@ -163,4 +176,35 @@ class Game extends Birdcore{
 
     }//end func
 
+    //游戏分享链接
+    public function share(){
+        $id = input('get.id',0,'int');
+        if($id == 0){
+            exit();
+        }
+        $pdo = Dbmysql::getInstance();
+        if($pdo->pdo === null){
+            $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+        }else{
+            $sql = "select * from bird_games_share where share_id=:id";
+            $presql = $pdo->pdo->prepare($sql);
+            $presql->bindValue(":id",$id);
+            $do = $presql->execute();
+            if($do){
+                $result = $presql->fetchAll();
+                if(empty($result)){
+                    $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+                }else{
+                    $data = ['score' => $result[0]['SCORE'], 'max_score' => $result[0]['MAX_SCORE'], 'openid' => $result[0]['OPENID']];
+                }
+            }else{
+                $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+            }
+        }//end if
+
+        $this->assign('score',$data['score']);
+        $this->assign('max_score',$data['max_score']);
+
+        return $this->fetch('share');
+    }
 }//end class
