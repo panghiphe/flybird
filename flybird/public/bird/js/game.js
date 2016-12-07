@@ -1,7 +1,11 @@
 var game = null;
 var score = 0;
 $(document).ready(function(){
-	 game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
+	$(".close-btn").click(function(){
+		$(this).parents().find(".alert-dlg").fadeOut("fast");
+	});
+	
+	game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
 
 	game.state.add('load',load_state);
 	game.state.add('menu',menu_state);
