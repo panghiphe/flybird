@@ -13,6 +13,7 @@ use app\addon\Dbmysql;
 use app\index\Gamestat;
 use app\initcore\Birdcore;
 use app\addon\Mooncurl;
+use app\addon\Applog;
 
 class Game extends Birdcore{
 
@@ -35,6 +36,9 @@ class Game extends Birdcore{
             exit('886');
         }
 
+        //返回历史最高分
+        $maxscore = $this->_getUserMaxScore();
+
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo == null){
             return [];
@@ -53,12 +57,35 @@ class Game extends Birdcore{
         if($do){
             //在这里加个向商城加积分的接口
             $this->_addGameScoreToWoaap($score);
-            return ['error' => '0', 'msg' => '游戏分数保存成功！'];
+            return ['error' => '0', 'max' => $maxscore, 'msg' => '游戏分数保存成功！'];
         }else{
 
-            return ['error' => '10', 'msg' => '游戏分数保存失败鸟！'];
+            return ['error' => '10', 'max' => '0', 'msg' => '游戏分数保存失败鸟！'];
         }
 
+    }
+
+    /**
+     * 获取用户历史最高积分
+     * @return mixed $score  分数
+     */
+    private function _getUserMaxScore(){
+        $pdo = Dbmysql::getInstance();
+        if($pdo->pdo == null){
+            return '0';
+        }
+        $sql = "select score from bird_game_record where openid=:openid order by score desc limit 1";
+        $presql = $pdo->pdo->prepare($sql);
+        $presql->bindValue(":openid",session('openid'));
+        try{
+            $result = $presql->fetchAll();
+            return isset($result[0]['score'])?$result[0]['score']: '0';
+        }catch (\Exception $e){
+            Applog::appLog('error',['info' => '查询用户历史最高分出错',
+                'file' => __FILE__, 'line' => __LINE__,
+                'err' => $e->getMessage()]);
+            return '0';
+        }
     }
     /**
      * 调用商城积分接口
