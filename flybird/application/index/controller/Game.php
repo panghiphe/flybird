@@ -69,7 +69,7 @@ class Game extends Birdcore{
             $this->_addGameScoreToWoaap($score);
 
             $shareid = $pdo->pdo->lastInsertId();
-            $url = 'http://www.dr-s.cn/bird/game/share/id/'.$shareid;
+            $url = 'http://www.dr-s.cn/bird/game/share?id='.$shareid;
             return ['error' => '0', 'max' => $maxscore, 'msg' => '游戏分数保存成功！','shareUrl' => $url];
         }else{
 
