@@ -78,9 +78,19 @@ class Game extends Birdcore{
         $presql = $pdo->pdo->prepare($sql);
         $presql->bindValue(":openid",session('openid'));
         try{
-            $presql->execute();   //执行
-            $result = $presql->fetchAll();
-            return isset($result[0]['score'])?$result[0]['score']: '0';
+            $do = $presql->execute();   //执行
+            if($do){
+                $result = $presql->fetchAll();
+                return isset($result[0]['score'])?$result[0]['score']: '0';
+
+            }else{
+                Applog::appLog('error',['info' => '查询用户历史最高分出错,sql 执行失败',
+                    'file' => __FILE__, 'line' => __LINE__,
+                    'sql' => $sql,
+                    'presql' => $presql,
+                    'err' => $presql->errorInfo()]);
+                return '0';
+            }
         }catch (\Exception $e){
             Applog::appLog('error',['info' => '查询用户历史最高分出错',
                 'file' => __FILE__, 'line' => __LINE__,
