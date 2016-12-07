@@ -16,8 +16,7 @@ class Birdcore extends Controller{
 
     public function _initialize()
     {
-       // $this->_checkOpenid();
-      //  $this->woaapAutologin();
+        $this->woaapAutologin();
         $this->_loginFromPc();
     }
 
