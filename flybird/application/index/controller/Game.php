@@ -74,10 +74,11 @@ class Game extends Birdcore{
         if($pdo->pdo == null){
             return '0';
         }
-        $sql = "select score from bird_game_record where openid=:openid order by score desc limit 1";
+        $sql = "select score from bird_games_record where openid=:openid order by score desc limit 1";
         $presql = $pdo->pdo->prepare($sql);
         $presql->bindValue(":openid",session('openid'));
         try{
+            $presql->execute();   //执行
             $result = $presql->fetchAll();
             return isset($result[0]['score'])?$result[0]['score']: '0';
         }catch (\Exception $e){
