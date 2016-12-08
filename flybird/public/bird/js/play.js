@@ -1,5 +1,6 @@
 var play_state = {
     create: function() { 
+        var t = this;
 		//载入所需资源
 		this.bgs = game.add.group();
 		this.bgs.createMultiple(3, 'playbg'); 
