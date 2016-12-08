@@ -48,7 +48,7 @@ var play_state = {
 
         this.bird = this.game.add.sprite(100, 245, 'bird');
         game.physics.arcade.enable(this.bird);
-        this.bird.scale.x = game.world.width * 0.15 / this.bird.width;
+        this.bird.scale.x = 34 / this.bird.width;
 		this.bird.scale.y = this.bird.scale.x;
         this.bird.animations.add('fly', [0, 1, 2], 10, true);
         this.bird.animations.play('fly');
