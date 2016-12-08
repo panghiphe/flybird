@@ -1,6 +1,7 @@
 var game = null;
 var score = 0;
 var bra_num = 0;
+var max_score = 0;
 $(document).ready(function(){
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
