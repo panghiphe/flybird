@@ -13,7 +13,7 @@ var play_state = {
         });
 		this.add_one_bg(0, 0);
 		this.add_one_bg();
-        this.bgtimer = this.game.time.events.loop(2900, this.add_one_bg, this);           
+        this.bgtimer = this.game.time.events.loop(3900, this.add_one_bg, this);           
 
 		/*this.bo = this.game.add.sprite(0,0,'bo');
 		this.bo.width = game.world.width;
@@ -150,7 +150,7 @@ var play_state = {
         if(!bra.isCount)
         {
         	bra.isCount = true;
-        	score += 3; 
+        	score += 2; 
         	bra.body.velocity.x = 0;
         	bra_num++;
         	this.game.physics.arcade.moveToObject(bra, this.score_text, 1000);
@@ -239,7 +239,7 @@ var play_state = {
         	this.bgs.add(bg);
         }
         bg.reset(x, y);
-        bg.body.velocity.x = -1*game.world.width/3; 
+        bg.body.velocity.x = -1*game.world.width/4; 
         bg.checkWorldBounds = true;
         bg.outOfBoundsKill = true;
     },
