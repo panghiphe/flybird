@@ -117,24 +117,6 @@ var play_state = {
     		}
     	});
     },
-    //告诉后台游戏结束
-    end_game: function() {
-    	var postData = {
-    		score: score
-    	};
-    	$.ajax({
-    		url: "/bird/game/end",
-    		type: "post",
-    		data: postData,
-    		dataType: "json",
-    		success: function(data) {
-    			
-    		},
-    		error: function() {
-    			
-    		}
-    	});
-    },
 	//每次按下空格调用的函数
     jump: function() {
         if (this.bird.alive == false)
@@ -222,7 +204,6 @@ var play_state = {
 	//重新开始函数
     restart_game: function() {
         this.game.time.events.remove(this.timer);
-		this.end_game();
         this.game.state.start('gameover');
     },
     
