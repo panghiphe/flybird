@@ -113,6 +113,7 @@ var gameover_state = {
     	var postData = {
     		score: score
     	};
+    	var t = this;
     	$.ajax({
     		url: "/bird/game/end",
     		type: "post",
@@ -121,7 +122,7 @@ var gameover_state = {
     		success: function(data) {
     			if(data.error == "0")
     			{
-    				this.max_score_text.text = Math.max(parseInt(data.max), score);
+    				t.max_score_text.text = Math.max(parseInt(data.max), score);
     			}
     		},
     		error: function() {
