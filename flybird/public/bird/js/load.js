@@ -14,8 +14,25 @@ var load_state = {
         this.game.load.image('pipe', '/bird/image/pipe.png');  
         this.game.load.audio('jump', '/bird/image/jump.wav');
 		this.game.load.audio('dead','/bird/image/dead.wav');
+		this.game.load.image('diamond','/bird/image/diamond.png');
+		this.game.load.image('gameoverbg','/bird/image/gameover-bg.jpg');
 		this.game.load.image('gameover','/bird/image/gameover.png');
 		this.game.load.image('diamond','/bird/image/diamond.png');
+		this.game.load.image('playbg','/bird/image/play-bg.jpg');
+		this.game.load.image('pipeup','/bird/image/up-lock.png');
+		this.game.load.image('pipedown','/bird/image/down-lock.png');
+		this.game.load.image('merry','/bird/image/Christmas.png');
+        this.game.load.image('btnflower','/bird/image/flower.png');
+        this.game.load.image('scoreboard','/bird/image/score-board.png');
+        this.game.load.image('bottom','/bird/image/bottom.png');
+        this.game.load.image('sharebtn','/bird/image/share-btn.png');
+        this.game.load.image('replaybtn','/bird/image/replay-btn.png');
+        this.game.load.image('rank_btn','/bird/image/rank_btn.png');
+        this.game.load.image('bra0','/bird/image/bra0.png');
+        this.game.load.image('bra1','/bird/image/bra1.png');
+        this.game.load.image('bra2','/bird/image/bra2.png');
+        this.game.load.image('bra3','/bird/image/bra3.png');
+        this.game.load.image('bra4','/bird/image/bra4.png');
     },
 
     create: function() {
