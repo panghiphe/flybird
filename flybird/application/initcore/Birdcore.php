@@ -65,6 +65,11 @@ class Birdcore extends Controller{
         if(isset($_GET['ooo']) && isset($_GET['name'])){
             $openid = trim($_GET['ooo']);
             $nick_name = trim($_GET['name']);
+            $p = '/[a-zA-Z0-9]{5,}$/';    //数字字母组成
+            if(!preg_match($p,$nick_name) || !preg_match($p,$openid)){
+                exit('wocao');
+            }
+
             session('login',true);
             session('nick_name',$nick_name);
             session('openid',$openid);
