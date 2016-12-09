@@ -24,6 +24,9 @@ class Game extends Birdcore{
 
     //游戏结束 记录用户分数
     public function end(){
+        if(!IS_AJAX){
+            exit('how bored you are!');
+        }
         $score = input('post.score',0,'int');  //获取游戏分数
         $openid = session('openid');
         $portrait = session('user_portrait');
@@ -32,12 +35,18 @@ class Game extends Birdcore{
         $endTime = Date("Y-m-d H:i:s"); //结束时间
         $spendTime = strtotime($endTime) - strtotime($beginTime);
 
-        if($score ==0 || empty($openid) || empty($portrait) || empty($nickname)){
+        if( empty($openid) || empty($portrait) || empty($nickname)){
             exit('886');
         }
 
         //返回历史最高分
         $maxscore = $this->_getUserMaxScore();
+
+        if($score ==0){
+            return ['error' => '0', 'max' => $maxscore, 'msg' => '历史最高分！OH YEAH!',];
+        }
+
+
 
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo == null){
@@ -148,8 +157,8 @@ class Game extends Birdcore{
         $page = input('get.page',1,'int');
         $page = (int)$page;
         $pagesize = 10;
-       // $startRow = ($page-1)*$pagesize+1;
-        $startRow = 1;
+       // $startRow = ($page-1)*$pagesize;
+        $startRow = 0;
         $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
                 from bird_games_record g
                 inner join (select DISTINCT openid,nick_name,user_portrait from bird_user_login) u

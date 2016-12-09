@@ -14,7 +14,7 @@ use think\Route;
 Route::group('bird', function () {
     Route::group('game', function () {
         Route::rule('start', 'index/game/play');  // 开始游戏
-        Route::rule('end','index/game/end');   //游戏玩完
+        Route::rule('end','index/game/end','POST');   //游戏玩完
         Route::rule('rank','index/game/rank');  // 游戏排名
         Route::rule('share','index/game/share');   //游戏分享链接
     });
