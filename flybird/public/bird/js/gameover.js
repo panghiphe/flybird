@@ -111,7 +111,8 @@ var gameover_state = {
     //告诉后台游戏结束
     end_game: function() {
     	var postData = {
-    		score: score
+    		score: score,
+    		bra_num: bra_num
     	};
     	var t = this;
     	$.ajax({
