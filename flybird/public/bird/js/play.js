@@ -146,11 +146,12 @@ var play_state = {
     },
     //将bra转移到分值
     get_bra: function(label, bra) {
-        if(bra.alive)
+        if(bra.alive && bra.isCount)
         {
         	this.score_text.text = score;
         	bra.kill();
         	bra.alive = false;
+        	bra.destroy();
         }
     },
     //通过管子
