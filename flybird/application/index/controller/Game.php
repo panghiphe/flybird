@@ -127,7 +127,7 @@ class Game extends Birdcore{
      */
     private function _addGameScoreToWoaap($score){
         $apiurl = 'http://dslrweishop.woaap.com';   //正式环境
-        $uri = '/Activity/postUserIntegByActivity';
+        $uri = '/api/Activity/postUserIntegByActivity';
 
         $activity_name = 'dslr_bra_city';
         $activity_no = 'c6489851300d951760f52800481cb0f5';
