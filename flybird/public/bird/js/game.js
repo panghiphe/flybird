@@ -1,8 +1,14 @@
 var game = null;
 var score = 0;
+var bra_num = 0;
+var max_score = 0;
 $(document).ready(function(){
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
+	});
+	
+	$("#share-dlg").click(function() {
+		$(this).fadeOut("fast");
 	});
 	
 	game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');

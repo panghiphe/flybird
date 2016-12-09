@@ -63,6 +63,11 @@ var menu_state={
 		this.rankBtn.scale.y = btnScale;
 		this.rankBtn.anchor.setTo(0.5,0.5);
 		
+        this.btnflower = this.game.add.sprite(x, this.startBtn.position.y - this.startBtn.height/2, "btnflower");
+        this.btnflower.scale.x = game.world.width * 0.19 / this.btnflower.width;
+		this.btnflower.scale.y = this.btnflower.scale.x;
+		this.btnflower.anchor.setTo(0.5,0.5);
+        
 		//$(".opt-btn-con").fadeIn();
 	},
 	show_rank: function() {
@@ -104,6 +109,6 @@ var menu_state={
     	});
 	},
 	start:function(){
-		this.game.state.start('ready');		//调用start()函数后进入'ready'state
+		this.game.state.start('play');		//调用start()函数后进入'play'state
 	}
 };
