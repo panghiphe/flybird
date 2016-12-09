@@ -72,13 +72,13 @@ var play_state = {
         bra_num = 0;
         
         var style = { font: "bold 18px Arial", fill: "#ffffff" };
-        this.score_label = this.game.add.text(game.world.width/2, 30, "分数", style);
+        this.score_label = this.game.add.text(game.world.width/2, 50, "分数", style);
         this.score_label.anchor.setTo(1, 0);
         
-        this.score_text = this.game.add.text(game.world.width/2, 30, "0", style); 
+        this.score_text = this.game.add.text(game.world.width/2, 50, "0", style); 
         this.score_text.anchor.setTo(-1, 0);
         //game.physics.arcade.enable(this.score_text);
-        this.score_box = this.game.add.sprite(game.world.width/2, 30);
+        this.score_box = this.game.add.sprite(game.world.width/2, 50);
         game.physics.arcade.enable(this.score_box);
         this.score_box.width = 30;
         this.score_box.height = 20;
