@@ -137,7 +137,7 @@ class Game extends Birdcore{
         $activity_str = sha1($activity_str);
 
         $data['openid'] = session('openid');
-        $data['integ'] = $score;
+        $data['integ'] = (int)$score;
         $data['avtivity_name'] = $activity_name;
         $data['cur_date'] = $now_time;
         $data['avtivity_str'] = $activity_str;
