@@ -284,7 +284,7 @@ var play_state = {
        	var braIndex = Math.floor(Math.random()*4);
         var bra = this.game.add.sprite(x, y, 'bra' + braIndex);
     	game.physics.arcade.enable(bra);
-		bra.scale.x = game.world.width * 0.25 / bra.width;
+		bra.scale.x = game.world.width * 0.2 / bra.width;
 		bra.scale.y = bra.scale.x;
     	this.bras.add(bra);
         bra.reset(x, y);
