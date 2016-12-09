@@ -50,13 +50,13 @@ var gameover_state = {
 		
 		this.score_label = this.game.add.text(x+10,this.score_board.position.y + this.score_board.height * 0.334,"本次分数 ",style);
 		
-		this.bra_sprite = this.game.add.sprite(this.bra_label.position.x-this.bra_label.width-5, this.bra_label.position.y + this.bra_label.height + 5, 'bra0');
+		this.bra_sprite = this.game.add.sprite(this.bra_label.position.x-this.bra_label.width-8, this.bra_label.position.y + this.bra_label.height + 5, 'bra0');
 		this.bra_sprite.scale.x = game.world.width * 0.12 / this.bra_sprite.width;
 		this.bra_sprite.scale.y = this.bra_sprite.scale.x;
 		//this.bra_sprite.anchor.setTo(1,0);
 		
-		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+22, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10,"x" + bra_num,style1);
-		this.bra_text.anchor.setTo(1, 0.5);
+		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+7, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10,"x" + bra_num,style1);
+		this.bra_text.anchor.setTo(0, 0.5);
 		
 		this.score_text = this.game.add.text(this.score_label.x+this.score_label.width/2, this.score_label.position.y + this.score_label.height, score, style1);
 		this.score_text.anchor.setTo(0.5, 0);

@@ -78,10 +78,10 @@ var play_state = {
         this.score_text = this.game.add.text(game.world.width/2, 30, "0", style); 
         this.score_text.anchor.setTo(-1, 0);
         //game.physics.arcade.enable(this.score_text);
-        this.score_box = this.game.add.sprite(20, 20);
+        this.score_box = this.game.add.sprite(game.world.width/2, 30);
         game.physics.arcade.enable(this.score_box);
-        this.score_box.width = 50;
-        this.score_box.height = 50;
+        this.score_box.width = 30;
+        this.score_box.height = 20;
 
         this.jump_sound = this.game.add.audio('jump');		//加载音效
 		this.dead_sound = this.game.add.audio('dead');		//||
@@ -242,6 +242,7 @@ var play_state = {
 	    		
 		        this.game.time.events.remove(this.bgtimer);
 		        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_bg, this); 
+		        this.add_one_bg();
 		        
 		        this.game.time.events.remove(this.timer);
 	    		this.timer = this.game.time.events.loop(this.braIntervals[this.level]*0.75*1000, this.add_row_of_pipes, this);
