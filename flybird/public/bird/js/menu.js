@@ -20,7 +20,7 @@ var menu_state={
 			}
 			else if(isPointInBounds(evPos, t.ruleBtn.getBounds()))
 			{
-				$("#rule-dlg").fadeIn("fast");
+				t.show_rule();
 			}
             
         }
@@ -47,13 +47,13 @@ var menu_state={
         this.bird.animations.add('fly', [0, 1, 2], 10, true);
         this.bird.animations.play('fly');
         
-		this.startBtn = this.game.add.button(x, this.titleImg.position.y + this.titleImg.height + 50, "startbtn", this.show_rank);
+		this.startBtn = this.game.add.button(x, this.titleImg.position.y + this.titleImg.height + 50, "startbtn", this.start);
         var btnScale = game.world.width * 0.58 / this.startBtn.width;
         this.startBtn.scale.x = btnScale;
 		this.startBtn.scale.y = btnScale;
 		this.startBtn.anchor.setTo(0.5,0.5);
 		
-		this.ruleBtn = this.game.add.button(x, this.startBtn.position.y + this.startBtn.height + 10, "rulebtn", this.show_rank);
+		this.ruleBtn = this.game.add.button(x, this.startBtn.position.y + this.startBtn.height + 10, "rulebtn", this.show_rule);
         this.ruleBtn.scale.x = btnScale;
 		this.ruleBtn.scale.y = btnScale;
 		this.ruleBtn.anchor.setTo(0.5,0.5);
@@ -107,6 +107,9 @@ var menu_state={
     			
     		}
     	});
+	},
+	show_rule: function() {
+		$("#rule-dlg").fadeIn("fast");
 	},
 	start:function(){
 		this.game.state.start('play');		//调用start()函数后进入'play'state
