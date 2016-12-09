@@ -1,6 +1,11 @@
 var play_state = {
     create: function() { 
         var t = this;
+        this.bgIntervals = [5,4.5,4,3.5,3];
+        this.braIntervals = [3,2.5,2,1.5,1];
+        this.scoreLevels = [20, 40, 60, 80]
+        this.level = 0;
+        
 		//载入所需资源
 		this.bgs = game.add.group();
 		this.bgs.createMultiple(3, 'playbg'); 
@@ -12,9 +17,7 @@ var play_state = {
         		t.add_one_bg();
         	}, bg);*/
         });
-		this.add_one_bg(0, 0);
-		this.add_one_bg();
-        this.bgtimer = this.game.time.events.loop(3900, this.add_one_bg, this);           
+        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_bg, this);           
 
 		/*this.bo = this.game.add.sprite(0,0,'bo');
 		this.bo.width = game.world.width;
@@ -44,7 +47,7 @@ var play_state = {
         this.pipedowns.createMultiple(3, 'pipedown'); 
         game.physics.arcade.enable(this.pipedowns, true);
         
-        this.timer = this.game.time.events.loop(1500, this.add_row_of_pipes, this);           
+        this.timer = this.game.time.events.loop(this.braIntervals[this.level]*0.75*1000, this.add_row_of_pipes, this);           
 
         this.bird = this.game.add.sprite(100, 245, 'bird');
         game.physics.arcade.enable(this.bird);
@@ -68,17 +71,17 @@ var play_state = {
         score = 0; 
         bra_num = 0;
         
-        var style = { font: "16px Arial", fill: "#ffffff" };
-        this.score_label = this.game.add.text(game.world.width/2, 30, "分数", style);
+        var style = { font: "bold 18px Arial", fill: "#ffffff" };
+        this.score_label = this.game.add.text(game.world.width/2, 50, "分数", style);
         this.score_label.anchor.setTo(1, 0);
         
-        this.score_text = this.game.add.text(game.world.width/2, 30, "0", style); 
+        this.score_text = this.game.add.text(game.world.width/2, 50, "0", style); 
         this.score_text.anchor.setTo(-1, 0);
         //game.physics.arcade.enable(this.score_text);
-        this.score_box = this.game.add.sprite(20, 20);
+        this.score_box = this.game.add.sprite(game.world.width/2, 50);
         game.physics.arcade.enable(this.score_box);
-        this.score_box.width = 50;
-        this.score_box.height = 50;
+        this.score_box.width = 30;
+        this.score_box.height = 20;
 
         this.jump_sound = this.game.add.audio('jump');		//加载音效
 		this.dead_sound = this.game.add.audio('dead');		//||
@@ -86,6 +89,8 @@ var play_state = {
 		this.holeIndex = 1;  //保留当前通道的索引，避免相邻两个管道的通道上下距离太远而无法通过游戏，最好保持在上下1.5个通道高度的距离
 		
 		this.start_game();
+		this.add_one_bg(0, 0);
+		this.add_one_bg();
     },
 
     update: function() {
@@ -122,7 +127,7 @@ var play_state = {
         if (this.bird.alive == false)
             return; 
 
-        this.bird.body.velocity.y = -350;
+        this.bird.body.velocity.y = -300;
         this.game.add.tween(this.bird).to({angle: -20}, 50).start();
         this.jump_sound.play();
     },
@@ -206,6 +211,64 @@ var play_state = {
         this.game.time.events.remove(this.timer);
         this.game.state.start('gameover');
     },
+    //更新游戏关卡（速度变化）
+    checkAndUpdateLevel: function() {
+    	var level = this.level;
+    	if (this.bird.alive != false)
+        {
+        	if(score < this.scoreLevels[0])
+	    	{
+	    		level = 0;
+	    	}
+	    	else if(score >= this.scoreLevels[0] && score < this.scoreLevels[1])
+	    	{
+	    		level = 1;
+	    	}
+	    	else if(score >= this.scoreLevels[1] && score < this.scoreLevels[2])
+	    	{
+	    		level = 2;
+	    	}
+	    	else if(score >= this.scoreLevels[2] && score < this.scoreLevels[3])
+	    	{
+	    		level = 3;
+	    	}
+	    	else 
+	    	{
+	    		level = 4;
+	    	}
+	    	if(level != this.level)
+	    	{
+	    		this.level = level;
+	    		
+		        this.game.time.events.remove(this.bgtimer);
+		        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_bg, this); 
+		        this.add_one_bg();
+		        
+		        this.game.time.events.remove(this.timer);
+	    		this.timer = this.game.time.events.loop(this.braIntervals[this.level]*0.75*1000, this.add_row_of_pipes, this);
+	    		
+		        this.bgs.forEach(function(bg){
+		            bg.body.velocity.x = -1*game.world.width/this.bgIntervals[this.level]; 
+		        }, this);
+	        	
+		        this.pipes.forEach(function(pipe){
+		        	pipe.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
+		        }, this);
+		        
+		        this.pipeups.forEach(function(pipeup){
+		        	pipeup.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
+		        }, this);
+		        
+		        this.pipedowns.forEach(function(pipeDown){
+		        	pipeDown.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
+		        }, this);
+		        
+		        this.bras.forEach(function(bra) {
+		        	bra.body.velocity.x = -1*game.world.width/this.braIntervals[this.level]; 
+		        }, this);
+	    	}
+        }
+    },
     
 	//增加游戏背景场景
     add_one_bg: function(x, y) {
@@ -221,9 +284,10 @@ var play_state = {
         	this.bgs.add(bg);
         }
         bg.reset(x, y);
-        bg.body.velocity.x = -1*game.world.width/4; 
         bg.checkWorldBounds = true;
         bg.outOfBoundsKill = true;
+        bg.body.velocity.x = -1*game.world.width/this.bgIntervals[this.level];
+        this.checkAndUpdateLevel();
     },
     
 	//增加障碍肩带
@@ -236,9 +300,9 @@ var play_state = {
         	this.pipes.add(pipe);
         }
         pipe.reset(x, y);
-        pipe.body.velocity.x = -1*game.world.width/2; 
         pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
+        pipe.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
     },
     //增加肩带障碍上扣子
     add_one_pipe_up: function(x, y) {
@@ -253,9 +317,9 @@ var play_state = {
         	this.pipeups.add(pipeup);
         }
         pipeup.reset(x, y);
-        pipeup.body.velocity.x = -1*game.world.width/2; 
         pipeup.checkWorldBounds = true;
         pipeup.outOfBoundsKill = true;
+        pipeup.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
     },
 	//增加障碍下肩带扣子
     add_one_pipe_down: function(x, y) {
@@ -267,9 +331,9 @@ var play_state = {
         	this.pipedowns.add(pipedown);
         }
         pipedown.reset(x, y);
-        pipedown.body.velocity.x = -1*game.world.width/2; 
         pipedown.checkWorldBounds = true;
         pipedown.outOfBoundsKill = true;
+        pipedown.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
     },
     
     //增加可收集的bra
@@ -284,14 +348,16 @@ var play_state = {
        	var braIndex = Math.floor(Math.random()*4);
         var bra = this.game.add.sprite(x, y, 'bra' + braIndex);
     	game.physics.arcade.enable(bra);
-		bra.scale.x = game.world.width * 0.25 / bra.width;
+		bra.scale.x = game.world.width * 0.2 / bra.width;
 		bra.scale.y = bra.scale.x;
     	this.bras.add(bra);
         bra.reset(x, y);
-        bra.body.velocity.x = -1*game.world.width/2; 
+        bra.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
     },
 
     add_row_of_pipes: function() {
+        this.checkAndUpdateLevel();
+        
     	var pipeNum = Math.ceil(game.world.height / 60);
         var hole = Math.floor(Math.random()*(pipeNum - 3))+1;
         if(hole > this.holeIndex + 5)
