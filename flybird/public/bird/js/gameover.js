@@ -24,8 +24,8 @@ var gameover_state = {
 			}
        } 
 		
-		var style = {font: "16px Arial",fill: "#b54503"};
-		var style1 = {font: "14px Arial",fill: "#f93e04"};
+		var style = {font: "bold 16px Arial",fill: "#b54503"};
+		var style1 = {font: "bold 16px Arial",fill: "#f93e04"};
 		var x = game.world.width/2,y = game.world.height/2;
 		
 		
@@ -55,7 +55,7 @@ var gameover_state = {
 		this.bra_sprite.scale.y = this.bra_sprite.scale.x;
 		//this.bra_sprite.anchor.setTo(1,0);
 		
-		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+20, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10,"x" + bra_num,style1);
+		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+22, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10,"x" + bra_num,style1);
 		this.bra_text.anchor.setTo(1, 0.5);
 		
 		this.score_text = this.game.add.text(this.score_label.x+this.score_label.width/2, this.score_label.position.y + this.score_label.height, score, style1);
