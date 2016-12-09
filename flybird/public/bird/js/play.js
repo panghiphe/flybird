@@ -68,7 +68,7 @@ var play_state = {
         score = 0; 
         bra_num = 0;
         
-        var style = { font: "16px Arial", fill: "#ffffff" };
+        var style = { font: "bold 18px Arial", fill: "#ffffff" };
         this.score_label = this.game.add.text(game.world.width/2, 30, "分数", style);
         this.score_label.anchor.setTo(1, 0);
         
