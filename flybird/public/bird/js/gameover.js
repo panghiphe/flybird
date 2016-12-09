@@ -1,6 +1,5 @@
 var gameover_state = {
 	create:function(){
-		this.end_game();
 		var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		space_key.onDown.add(this.start,this);	
 		var t = this;
@@ -98,6 +97,7 @@ var gameover_state = {
 		this.gamebottom.scale.y = this.gamebottom.scale.x
 		this.gamebottom.anchor.setTo(0,1);
 		
+		this.end_game();
 		/*var score_label = this.game.add.text(x,y-50,"score " + score,style1);
 		score_label.anchor.setTo(0.5,0.5);
 		var bestScore = localStorage.flybestScore? Number(localStorage.flybestScore):0
