@@ -28,12 +28,15 @@ class Game extends Birdcore{
             exit('how bored you are!');
         }
         $score = input('post.score',0,'int');  //获取游戏分数
+        (!is_numeric($score) || $score <0 )&& $score  = 0;
         $openid = session('openid');
         $portrait = session('user_portrait');
         $nickname = session('nick_name');
         $beginTime = session('game_start_time');  //游戏开始时间
         $endTime = Date("Y-m-d H:i:s"); //结束时间
         $spendTime = strtotime($endTime) - strtotime($beginTime);
+        $braNum = input('post.bra_num',0,'int');  //游戏获得bra 数量
+        (!is_numeric($braNum) || $braNum < 0 )&& $braNum = 0;
 
         if( empty($openid) || empty($portrait) || empty($nickname)){
             exit('886');
@@ -54,22 +57,24 @@ class Game extends Birdcore{
         }
 
         //增加游戏记录
-        $sql = "insert into bird_games_record(openid,score,play_begin_time,play_end_time,spend_time)
-                values(:openid,:score,:beginTime,:endTime,:spendTime)";
+        $sql = "insert into bird_games_record(openid,score,play_begin_time,play_end_time,spend_time,bra_num)
+                values(:openid,:score,:beginTime,:endTime,:spendTime,:braNum)";
         $presql = $pdo->pdo->prepare($sql);
         $presql->bindValue(":openid",$openid);
         $presql->bindValue(":score",$score);
         $presql->bindValue(":beginTime",$beginTime);
         $presql->bindValue(":endTime",$endTime);
         $presql->bindValue(":spendTime",$spendTime);
+        $presql->bindValue(":braNum",$braNum);
 
         //增加分享链接
-        $shareSql = "insert into bird_games_share(openid,score,max_score)
-                      values(:openid,:score,:max_score);";
+        $shareSql = "insert into bird_games_share(openid,score,max_score,bra_num)
+                      values(:openid,:score,:max_score,:braNum);";
         $preShareSql = $pdo->pdo->prepare($shareSql);
         $preShareSql->bindValue(":openid",$openid);
         $preShareSql->bindValue(":score",$score);
         $preShareSql->bindValue(":max_score",$maxscore);
+        $preShareSql->bindValue(":braNum",$braNum);
         $do = $presql->execute();
         $doShare = $preShareSql->execute();
 
@@ -197,7 +202,7 @@ class Game extends Birdcore{
         }
         $pdo = Dbmysql::getInstance();
         if($pdo->pdo === null){
-            $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+            $data = ['score' => '0', 'max_score' => '0', 'openid' => '','bra_num' => 0];
         }else{
             $sql = "select * from bird_games_share where share_id=:id";
             $presql = $pdo->pdo->prepare($sql);
@@ -206,12 +211,13 @@ class Game extends Birdcore{
             if($do){
                 $result = $presql->fetchAll();
                 if(empty($result)){
-                    $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+                    $data = ['score' => '0', 'max_score' => '0', 'openid' => '','bra_num' => 0];
                 }else{
-                    $data = ['score' => $result[0]['SCORE'], 'max_score' => $result[0]['MAX_SCORE'], 'openid' => $result[0]['OPENID']];
+                    $data = ['score' => $result[0]['SCORE'], 'max_score' => $result[0]['MAX_SCORE'],
+                        'openid' => $result[0]['OPENID'],'bra_num' => $result[0]['BRA_NUM']];
                 }
             }else{
-                $data = ['score' => '0', 'max_score' => '0', 'openid' => ''];
+                $data = ['score' => '0', 'max_score' => '0', 'openid' => '','bra_num' => 0];
             }
         }//end if
 
