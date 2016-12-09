@@ -112,7 +112,7 @@ var gameover_state = {
     end_game: function() {
     	var postData = {
     		score: score,
-    		bra_num: bra_num
+    		bra_num: bra_num 
     	};
     	var t = this;
     	$.ajax({
