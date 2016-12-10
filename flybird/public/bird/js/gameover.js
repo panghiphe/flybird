@@ -125,7 +125,7 @@ var gameover_state = {
     			if(data.error == "0")
     			{
     				t.max_score_text.text = Math.max(parseInt(data.max), score);
-    				this.shareUrl = data.shareUrl;
+    				t.shareUrl = data.shareUrl;
     			}
     		},
     		error: function() {
