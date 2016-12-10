@@ -3,32 +3,160 @@
 <head>
 	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no">
-	<title>飞翔吧，Bra</title>
+	<title>穿越Bra城，你敢吗？</title>
 	<style>
 	* {
 		padding: 0;
 		margin: 0;
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
 	}
 	html, body {
 		width: 100%;
 		height: 100%;
+		position: relative;
+	}
+	body{
+		background-image:url(/bird/image/gameover-bg.jpg);
+		background-size: 100% 100%;
+		font-family: verdana,tahoma,arial,sans-serif,"微软雅黑","Microsoft YaHei","MS Serif",serif;
+	}
+	img {
+		width: 100%;
+		height: auto;
+	}
+	a {
+		-webkit-tap-highlight-color: rgba(255,0,0,0);
 	}
     #game_div {
-      width: 100%;
-      height: 100%;
+    	position: absolute;
+      	width: 68%;
+      	height: auto;
+      	left: 16%;
+      	bottom: 10%;
     }
-		body{
-			background-image:url(/bird/image/birdbg.png);
-		}
+    .score-board {
+    	position: absolute;
+    	width: 80%;
+    	font-size: 0;
+    	text-align: center;
+  		left: 10%;
+  		top: 45%;
+  		transform: translateY(-50%);
+    }
+    .score-board > div {
+    	display: inline-block;
+    	width: 50%;
+    	font-size: 16px;
+    	font-weight: bold;
+    	float: left;
+    	text-align: center;
+    }
+    .score-label {
+    	color: #b54503;
+    }
+    .score-info {
+    	color: #f93e04;
+    	line-height: 30px;
+    }
+    .left-part .score-info {
+    	margin-top: 20px;
+    }
+    .bra-img {
+    	width: 50%;
+    	vertical-align: middle;
+    }
+    .goto-play {
+    	position: absolute;
+      	width: 58%;
+      	height: auto;
+      	left: 21%;
+      	bottom: 0;
+    }
+    .bottom-flower {
+    	width: 25%;
+    	position: absolute;
+    	left: 37.5%;
+    	top: 0;
+    	transform: translateY(-30%);
+    }
+    .alert-dlg {
+		display: none;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		left: 0;
+		top: 0;
+		background: rgba(0,0,0,0.3);
+	}
+	.board-con {
+		position: absolute;
+		width: 80%;
+		height: auto;
+		left: 10%;
+		top: 45%;
+		transform: translateY(-50%);
+		-webkit-transform: translateY(-50%);
+	}
+	.share-img {
+		display: none;
+		width: 400px;
+		height: auto;
+	}
   </style>
 </head>
 <body>
+	<img src="/bird/image/share-img.jpg" class="share-img" />
 	<div id="game_div">
-        {$score}
-        {$max_score}
-
-    </div>
+        <img src="/bird/image/score-board.png" />
+        <div class="score-board">
+        	<div class="left-part">
+        		<div class="score-label">内衣奖励</div>
+        		<div class="score-info">
+        			<img src="/bird/image/bra0.png" class="bra-img" />
+        			&times;<span class="bra-num">{$bra_num}</span>
+        		</div>
+        	</div>
+        	<div class="right-part">
+        		<div class="score-label">本次分数</div>
+        		<div class="score-info">
+        			<span class="score">{$score}</span>
+        		</div>
+        		<div class="score-label">最高分数</div>
+        		<div class="score-info">
+        			<span class="max-score">{$max_score}</span>
+        		</div>
+        	</div>
+        </div>
+        <a href="/bird/index" class="goto-play">
+        	<img src="/bird/image/goto-play.png" />
+        	<img src="/bird/image/flower.png" class="bottom-flower" />
+        </a>
+   	</div>
+	
+	<div class="alert-dlg" id="share-dlg">
+		<div class="board-con">
+			<div class="dlg-content">
+				<img src="/bird/image/share-tips.png" />
+			</div>
+		</div>
+	</div>
 	
 	<script type="text/javascript" src="/bird/js/jquery-1.11.2.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("#share-dlg").click(function() {
+				$(this).fadeOut("fast");
+			});
+			if(localStorage.shareFrom == "self")
+			{
+				localStorage.shareFrom = "";
+				setTimeout(function() {
+					$("#share-dlg").fadeIn("fast");
+				}, 2000);
+			}
+			
+		});
+	</script>
 </body>
 </html>
