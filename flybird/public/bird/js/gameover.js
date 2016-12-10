@@ -1,5 +1,6 @@
 var gameover_state = {
 	create:function(){
+		this.shareUrl = "";
 		var space_key = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		space_key.onDown.add(this.start,this);	
 		var t = this;
@@ -111,7 +112,8 @@ var gameover_state = {
     //告诉后台游戏结束
     end_game: function() {
     	var postData = {
-    		score: score
+    		score: score,
+    		bra_num: bra_num 
     	};
     	var t = this;
     	$.ajax({
@@ -123,6 +125,7 @@ var gameover_state = {
     			if(data.error == "0")
     			{
     				t.max_score_text.text = Math.max(parseInt(data.max), score);
+    				t.shareUrl = data.shareUrl;
     			}
     		},
     		error: function() {
@@ -169,7 +172,12 @@ var gameover_state = {
     	});
 	},
 	share_game: function() {
-		$("#share-dlg").fadeIn("fast");
+		//$("#share-dlg").fadeIn("fast");
+		if(this.shareUrl)
+		{
+			localStorage.shareFrom = "self";
+			location.href = this.shareUrl;
+		}
 	},
 	start:function(){
 		this.game.state.start('menu');	
