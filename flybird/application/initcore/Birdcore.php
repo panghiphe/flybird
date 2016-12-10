@@ -16,8 +16,7 @@ class Birdcore extends Controller{
 
     public function _initialize()
     {
-       // $this->_checkOpenid();
-      //  $this->woaapAutologin();
+        $this->woaapAutologin();
         $this->_loginFromPc();
     }
 
@@ -66,16 +65,23 @@ class Birdcore extends Controller{
         if(isset($_GET['ooo']) && isset($_GET['name'])){
             $openid = trim($_GET['ooo']);
             $nick_name = trim($_GET['name']);
+            $p = '/^[a-zA-Z0-9]{5,}$/';    //数字字母组成
+            if(!preg_match($p,$nick_name) || !preg_match($p,$openid)){
+                exit('wocao');
+            }
+
             session('login',true);
             session('nick_name',$nick_name);
             session('openid',$openid);
             session('user_portrait','/bird/image/bird_portrait.jpg');
-
+            $this->_loginRecord();
         }
     }
 
     /**
-     * 调用微信自运登录的
+     * 保存用户登录记录
+     * 所需三个参数
+     * session的, openid ,nick_name, user_portrait
      * @return bool|void
      */
     private function _loginRecord(){
