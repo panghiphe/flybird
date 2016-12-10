@@ -11,15 +11,54 @@ $(document).ready(function(){
 		$(this).fadeOut("fast");
 	});
 	
-	game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
+	if($(window).width() > $(window).height())
+	{
+		$(".msg-con").fadeIn("fast");
+	}
+	else
+	{
+		game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
 
-	game.state.add('load',load_state);
-	game.state.add('menu',menu_state);
-	game.state.add('ready',ready_state);
-	game.state.add('play',play_state);
-	game.state.add('gameover',gameover_state);
+		game.state.add('load',load_state);
+		game.state.add('menu',menu_state);
+		game.state.add('ready',ready_state);
+		game.state.add('play',play_state);
+		game.state.add('gameover',gameover_state);
+		
+		game.state.start('load');
+	}
 	
-	game.state.start('load');
+	$(window).resize(function() {
+		if($(window).width() > $(window).height())
+		{
+			$(".msg-con").fadeIn("fast");
+			if(game)
+			{
+				game.gamePaused();
+			}
+		}
+		else
+		{
+			$(".msg-con").fadeOut(function() {
+				if(game)
+				{
+					game.gameResumed();
+				}
+				else
+				{
+					game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
+
+					game.state.add('load',load_state);
+					game.state.add('menu',menu_state);
+					game.state.add('ready',ready_state);
+					game.state.add('play',play_state);
+					game.state.add('gameover',gameover_state);
+					
+					game.state.start('load');
+				}
+			});
+		}
+	});
 });
 
 function isPointInBounds(point, bounds) {
