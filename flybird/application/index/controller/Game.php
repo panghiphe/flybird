@@ -223,6 +223,7 @@ class Game extends Birdcore{
 
         $this->assign('score',$data['score']);
         $this->assign('max_score',$data['max_score']);
+        $this->assign('bra_num',$data['bra_num']);
 
         return $this->fetch('share');
     }
