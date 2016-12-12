@@ -37,6 +37,7 @@ class Birdcore extends Controller{
                 $logs['code'] = $_GET['code'];
                 $logs['file'] = __FILE__;
                 $logs['line'] = __LINE__;
+                $logs['session_code'] = session('woaap_code');
                 \app\addon\Applog::appLog('logs', $logs);
                 $woap = new \app\weixin\Woaap();
                 $woap->autologin();
