@@ -36,7 +36,7 @@ class Birdcore extends Controller{
                 session('woaap_code', $_GET['code']);
                 $logs['info'] = '调到woa自动登录接口！';
                 $logs['code'] = $_GET['code'];
-                $logs['url'] = $_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI];
+                $logs['url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
                 $logs['ip'] = getClientIP();
                 $logs['file'] = __FILE__;
                 $logs['line'] = __LINE__;
