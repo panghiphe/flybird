@@ -32,12 +32,12 @@ class Birdcore extends Controller{
     protected function woaapAutologin(){
         if(isset($_GET['code'])){
             if((session('woaap_code') && (session('woaap_code') != $_GET['code'])) || !session('woaap_code')) {
+                $logs['session_code'] = session('woaap_code');
                 session('woaap_code', $_GET['code']);
                 $logs['info'] = '调到woa自动登录接口！';
                 $logs['code'] = $_GET['code'];
                 $logs['file'] = __FILE__;
                 $logs['line'] = __LINE__;
-                $logs['session_code'] = session('woaap_code');
                 \app\addon\Applog::appLog('logs', $logs);
                 $woap = new \app\weixin\Woaap();
                 $woap->autologin();
