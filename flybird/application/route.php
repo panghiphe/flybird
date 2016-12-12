@@ -20,7 +20,7 @@ Route::group('bird', function () {
     });
 });
 
-Route::miss('index/index/world');    //空路由
+Route::miss('index/hello/world');    //空路由
 return [
     '__pattern__' => [
         'name' => '\w+',

@@ -17,7 +17,5 @@ class Index extends Birdcore
 
 
 
-    public function world(){
-        return 'hello little bird! welcome!';
-    }
+
 }
