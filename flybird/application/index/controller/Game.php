@@ -79,8 +79,8 @@ class Game extends Birdcore{
         $doShare = $preShareSql->execute();
 
         if($do && $doShare){
-            //在这里加个向商城加积分的接口
-            $this->_addGameScoreToWoaap($score);
+            //在这里加个向商城加积分的接口   2016.12.12 去掉了
+           // $this->_addGameScoreToWoaap($score);
 
             $shareid = $pdo->pdo->lastInsertId();
             $url = 'http://www.dr-s.cn/bird/game/share?id='.$shareid;
