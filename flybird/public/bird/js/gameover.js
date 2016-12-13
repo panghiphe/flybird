@@ -24,8 +24,9 @@ var gameover_state = {
 			}
        } 
 		
-		var style = {font: "bold 16px Arial",fill: "#b54503"};
-		var style1 = {font: "bold 16px Arial",fill: "#f93e04"};
+		var fontSize = 14 * pixelRatio;
+		var style = {font: "bold " + fontSize + "px Arial",fill: "#b54503"};
+		var style1 = {font: "bold " + fontSize + "px Arial",fill: "#f93e04"};
 		var x = game.world.width/2,y = game.world.height/2;
 		
 		
@@ -39,48 +40,48 @@ var gameover_state = {
 		this.gameover.scale.y = this.gameover.scale.x;
 		this.gameover.anchor.setTo(0.5,0);
 		
-		this.score_board = this.game.add.sprite(x, game.world.height * 0.08 + this.gameover.height/2 + 50,'scoreboard');
+		this.score_board = this.game.add.sprite(x, game.world.height * 0.08 + this.gameover.height/2 + 50 * pixelRatio,'scoreboard');
         var boardScale = game.world.width * 0.65 / this.score_board.width;
         this.score_board.scale.x = boardScale;
 		this.score_board.scale.y = boardScale;
 		this.score_board.anchor.setTo(0.5,0);
 		
-		this.bra_label = this.game.add.text(x-10,this.score_board.position.y + this.score_board.height * 0.334,"内衣奖励 ",style);
+		this.bra_label = this.game.add.text(x-10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.334,"内衣奖励 ",style);
 		this.bra_label.anchor.setTo(1, 0);
 		
-		this.score_label = this.game.add.text(x+10,this.score_board.position.y + this.score_board.height * 0.334,"本次分数 ",style);
+		this.score_label = this.game.add.text(x+10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.334,"本次分数 ",style);
 		
-		this.bra_sprite = this.game.add.sprite(this.bra_label.position.x-this.bra_label.width-8, this.bra_label.position.y + this.bra_label.height + 5, 'bra0');
+		this.bra_sprite = this.game.add.sprite(this.bra_label.position.x-this.bra_label.width-8 * pixelRatio, this.bra_label.position.y + this.bra_label.height + 5 * pixelRatio, 'bra0');
 		this.bra_sprite.scale.x = game.world.width * 0.12 / this.bra_sprite.width;
 		this.bra_sprite.scale.y = this.bra_sprite.scale.x;
 		//this.bra_sprite.anchor.setTo(1,0);
 		
-		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+7, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10,"x" + bra_num,style1);
+		this.bra_text = this.game.add.text(this.bra_sprite.position.x+this.bra_sprite.width+7 * pixelRatio, this.bra_sprite.position.y + this.bra_sprite.height/2 + 10 * pixelRatio,"x" + bra_num,style1);
 		this.bra_text.anchor.setTo(0, 0.5);
 		
 		this.score_text = this.game.add.text(this.score_label.x+this.score_label.width/2, this.score_label.position.y + this.score_label.height, score, style1);
 		this.score_text.anchor.setTo(0.5, 0);
 		
-		this.max_score_label = this.game.add.text(x+10, this.score_text.position.y + this.score_text.height, "最高分数 ",style);
+		this.max_score_label = this.game.add.text(x+10 * pixelRatio, this.score_text.position.y + this.score_text.height, "最高分数 ",style);
 		
 		this.max_score_text = this.game.add.text(this.max_score_label.x+this.max_score_label.width/2, this.max_score_label.position.y + this.max_score_label.height," ",style1);
 		this.max_score_text.anchor.setTo(0.5, 0);
 		
-		this.replayBtn = this.game.add.button(x-8, this.score_board.position.y + this.score_board.height * 0.564 + 5, "replaybtn", this.start);
-        var btnScale = 40 / this.replayBtn.width;
+		this.replayBtn = this.game.add.button(x-8 * pixelRatio, this.score_board.position.y + this.score_board.height * 0.564 + 5 * pixelRatio, "replaybtn", this.start);
+        var btnScale = 30 * pixelRatio / this.replayBtn.width;
         this.replayBtn.scale.x = btnScale;
 		this.replayBtn.scale.y = btnScale;
 		this.replayBtn.anchor.setTo(1,0);
 		
-		this.rankBtn = this.game.add.button(x+8, this.replayBtn.position.y, "rank_btn", this.show_rank);
-        var btnScale = 40 / this.rankBtn.width;
+		this.rankBtn = this.game.add.button(x+8 * pixelRatio, this.replayBtn.position.y, "rank_btn", this.show_rank);
+        var btnScale = 30 * pixelRatio / this.rankBtn.width;
         this.rankBtn.scale.x = btnScale;
 		this.rankBtn.scale.y = btnScale;
 		
 		var shareBtnY = this.score_board.position.y + this.score_board.height;
-		while(shareBtnY >= game.world.height-10)
+		while(shareBtnY >= game.world.height-10 * pixelRatio)
 		{
-			shareBtnY -= 5;
+			shareBtnY -= 5 * pixelRatio;
 		}
 		this.shareBtn = this.game.add.button(x, shareBtnY, "sharebtn", this.share_game);
         var btnScale = game.world.width * 0.58 / this.shareBtn.width;
@@ -91,7 +92,7 @@ var gameover_state = {
         this.btnflower = this.game.add.sprite(x, this.shareBtn.position.y - this.shareBtn.height/2, "btnflower");
         this.btnflower.scale.x = game.world.width * 0.19 / this.btnflower.width;
 		this.btnflower.scale.y = this.btnflower.scale.x;
-		this.btnflower.anchor.setTo(0.5,1.3);
+		this.btnflower.anchor.setTo(0.5,1.2);
         
 		this.gamebottom = this.game.add.sprite(0, game.world.height,'bottom');
         this.gamebottom.scale.x = game.world.width / this.gamebottom.width;

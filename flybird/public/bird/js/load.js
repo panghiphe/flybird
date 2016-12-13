@@ -10,7 +10,7 @@ var load_state = {
 		this.game.load.image('bo','/bird/image/back.png');
 		this.game.load.image('menu','/bird/image/menu.png');
 		this.game.load.image('ready','/bird/image/ready.png');
-        this.game.load.spritesheet('bird', '/bird/image/bird.png', 46, 34);
+        this.game.load.spritesheet('bird', '/bird/image/bird.png', 274, 200);
         this.game.load.image('pipe', '/bird/image/pipe.png');  
         this.game.load.audio('jump', '/bird/image/jump.wav');
 		this.game.load.audio('dead','/bird/image/dead.wav');
@@ -33,6 +33,9 @@ var load_state = {
         this.game.load.image('bra2','/bird/image/bra2.png');
         this.game.load.image('bra3','/bird/image/bra3.png');
         this.game.load.image('bra4','/bird/image/bra4.png');
+        this.game.load.image('ground','/bird/image/ground.png');
+		this.game.load.audio('get_bra','/bird/image/get-music.wav');
+		this.game.load.image('bird_die','/bird/image/bird-die.png');
     },
 
     create: function() {
