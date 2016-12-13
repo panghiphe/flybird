@@ -30,6 +30,10 @@ var play_state = {
 		this.bo.width = game.world.width;
 		this.bo.height = game.world.height;*/
 		
+        this.trees = game.add.group();
+		this.trees.createMultiple(3, 'tree'); 
+        game.physics.arcade.enable(this.trees, true);
+		
         this.merry_Christmas = this.game.add.sprite(game.world.width/2, game.world.height/2-100*pixelRatio, 'merry');
         this.merry_Christmas.scale.x = game.world.width * 0.5 / this.merry_Christmas.width;
 		this.merry_Christmas.scale.y = this.merry_Christmas.scale.x;
@@ -85,6 +89,8 @@ var play_state = {
         this.ground = this.game.add.sprite(-1*game.world.width, 0, 'ground');
         this.ground.scale.x = game.world.width / this.ground.width;
         this.ground.scale.y = this.ground.scale.x;
+        
+        this.add_one_tree(game.world.width/2);
 		
         this.bird = this.game.add.sprite(100, 245, 'bird');
         game.physics.arcade.enable(this.bird);
@@ -163,7 +169,7 @@ var play_state = {
             return; 
 
         this.bird.body.velocity.y = -250*pixelRatio;
-        this.game.add.tween(this.bird).to({angle: -20}, 50).start();
+        this.game.add.tween(this.bird).to({angle: -10}, 50).start();
         this.jump_sound.play();
     },
     //收集bra
@@ -251,6 +257,10 @@ var play_state = {
             g.body.velocity.x = 0;
         }, this);
         
+        this.trees.forEachAlive(function(tree){
+            tree.body.velocity.x = 0;
+        }, this);
+        
         this.bras.forEachAlive(function(p){
             p.body.velocity.x = 0;
         }, this);
@@ -319,6 +329,30 @@ var play_state = {
 		        }, this);
 	    	}
         }
+    },
+    
+    //增加一棵背景树
+    add_one_tree: function(x, y) {
+    	x = x != null? x:game.world.width*3/2;
+    	y = y != null? y:game.world.height-this.ground.height*0.73;
+        var tree = this.trees.getFirstDead();
+        if(!tree)
+        {
+        	tree = this.game.add.sprite(x, y, 'tree');
+        	game.physics.arcade.enable(tree);
+        	this.trees.add(tree);
+        }
+        tree.reset(x, y);
+        if(game.world.width * 0.4 != tree.width)
+        {
+        	tree.scale.x = game.world.width * 0.4 / tree.width;
+	        tree.scale.y = tree.scale.x;
+	        tree.anchor.setTo(0.5, 1);
+        }
+        
+        //tree.checkWorldBounds = true;
+        //tree.outOfBoundsKill = true;
+        tree.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
     },
     
     //增加地面背景
@@ -451,8 +485,10 @@ var play_state = {
         
         this.add_one_ground();
         
+       this.add_one_tree();
+        
         var pipeHeight = this.pipe.height;
-        var holeHeight = this.bird.height * 3.5;
+        var holeHeight = this.bird.height * 3;
         var holePosY = Math.floor(Math.random()*(game.world.height * 0.8 - this.ground.height - holeHeight)) + game.world.height * 0.10;
         
         var comeBra = Math.floor(Math.random() * 3) + 2;
