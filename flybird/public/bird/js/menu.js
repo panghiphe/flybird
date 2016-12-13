@@ -44,21 +44,21 @@ var menu_state={
         //game.physics.arcade.enable(this.bird);
         this.bird.scale.x = game.world.width * 0.184 / this.bird.width;
 		this.bird.scale.y = this.bird.scale.x;
-        this.bird.animations.add('fly', [0, 1, 2], 10, true);
+        this.bird.animations.add('fly', [0, 1, 2, 3], 10, true);
         this.bird.animations.play('fly');
         
-		this.startBtn = this.game.add.button(x, this.titleImg.position.y + this.titleImg.height + 50, "startbtn", this.start);
+		this.startBtn = this.game.add.button(x, this.titleImg.position.y + this.titleImg.height + 50*pixelRatio, "startbtn", this.start);
         var btnScale = game.world.width * 0.58 / this.startBtn.width;
         this.startBtn.scale.x = btnScale;
 		this.startBtn.scale.y = btnScale;
 		this.startBtn.anchor.setTo(0.5,0.5);
 		
-		this.ruleBtn = this.game.add.button(x, this.startBtn.position.y + this.startBtn.height + 10, "rulebtn", this.show_rule);
+		this.ruleBtn = this.game.add.button(x, this.startBtn.position.y + this.startBtn.height + 10*pixelRatio, "rulebtn", this.show_rule);
         this.ruleBtn.scale.x = btnScale;
 		this.ruleBtn.scale.y = btnScale;
 		this.ruleBtn.anchor.setTo(0.5,0.5);
 		
-		this.rankBtn = this.game.add.button(x, this.ruleBtn.position.y + this.ruleBtn.height + 10, "rankbtn", this.show_rank);
+		this.rankBtn = this.game.add.button(x, this.ruleBtn.position.y + this.ruleBtn.height + 10*pixelRatio, "rankbtn", this.show_rank);
         this.rankBtn.scale.x = btnScale;
 		this.rankBtn.scale.y = btnScale;
 		this.rankBtn.anchor.setTo(0.5,0.5);
@@ -68,6 +68,7 @@ var menu_state={
 		this.btnflower.scale.y = this.btnflower.scale.x;
 		this.btnflower.anchor.setTo(0.5,0.5);
         
+		document.getElementById("game-music").play();
 		//$(".opt-btn-con").fadeIn();
 	},
 	show_rank: function() {

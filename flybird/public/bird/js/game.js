@@ -1,7 +1,7 @@
 var game = null;
 var score = 0;
 var bra_num = 0;
-var max_score = 0;
+var pixelRatio = 2;
 $(document).ready(function(){
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
@@ -17,8 +17,7 @@ $(document).ready(function(){
 	}
 	else
 	{
-		game = new Phaser.Game(document.body.offsetWidth,document.body.offsetHeight,Phaser.AUTO,'game_div');
-
+		game = new Phaser.Game(document.body.offsetWidth*pixelRatio,document.body.offsetHeight*pixelRatio,Phaser.AUTO,'game_div');
 		game.state.add('load',load_state);
 		game.state.add('menu',menu_state);
 		game.state.add('ready',ready_state);
@@ -66,8 +65,8 @@ function isPointInBounds(point, bounds) {
 	{
 		return false;
 	}
-	if(point.x >= bounds.x && point.x <= bounds.x + bounds.width &&
-	   point.y >= bounds.y && point.y <= bounds.y + bounds.height)
+	if(point.x >= bounds.x/pixelRatio && point.x <= bounds.x/pixelRatio + bounds.width/pixelRatio &&
+	   point.y >= bounds.y/pixelRatio && point.y <= bounds.y/pixelRatio + bounds.height/pixelRatio)
 	{
 		return true;
 	}

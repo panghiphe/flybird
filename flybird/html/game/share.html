@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, user-scalable=no">
-	<title>穿越Bra城，你敢吗？</title>
+	<title>我在GoBra中获得了{$score}分，你敢挑战吗？</title>
 	<style>
 	* {
 		padding: 0;
@@ -103,6 +103,13 @@
 		width: 0;
 		height: 0;
 	}
+	.close-btn {
+		position: absolute;
+		width: 40px;
+		height: auto;
+		top: 45px;
+		right: 45px;
+	}
   </style>
 </head>
 <body>
@@ -136,10 +143,13 @@
 	
 	<div class="alert-dlg" id="share-dlg">
 		<div class="board-con">
-			<div class="dlg-content">
+			<div class="dlg-content" style="margin-left: 10%;">
 				<img src="/bird/image/share-tips.png" />
 			</div>
 		</div>
+		<a href="javascript:void(0);" class="close-btn">
+			<img src="/bird/image/close-btn.png" />
+		</a>
 	</div>
 	
 	<script type="text/javascript" src="/bird/js/jquery-1.11.2.min.js"></script>
