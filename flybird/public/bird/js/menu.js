@@ -16,6 +16,7 @@ var menu_state={
 			}
 			else if(isPointInBounds(evPos, t.startBtn.getBounds()))
 			{
+				$("#game-music")[0].play();
 				t.start();
 			}
 			else if(isPointInBounds(evPos, t.ruleBtn.getBounds()))
