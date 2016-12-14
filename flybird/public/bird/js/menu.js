@@ -68,7 +68,10 @@ var menu_state={
 		this.btnflower.scale.y = this.btnflower.scale.x;
 		this.btnflower.anchor.setTo(0.5,0.5);
         
-		document.getElementById("game-music").play();
+        var bgAudio = '<audio id="game-music" src="/bird/image/bg-music.mp3" style="display: none;" loop="loop"></audio>';
+        $("body").append(bgAudio);
+        $("#game-music")[0].play();
+		//document.getElementById("game-music").play();
 		//$(".opt-btn-con").fadeIn();
 	},
 	show_rank: function() {
