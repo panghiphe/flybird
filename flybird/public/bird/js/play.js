@@ -1,7 +1,7 @@
 var play_state = {
     create: function() { 
         var t = this;
-        // Not 'this.score', but just 'score'
+        // Not 'this.score', but just 'score' 
         score = 0; 
         bra_num = 0;
         
