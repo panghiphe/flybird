@@ -37,6 +37,7 @@ var load_state = {
 		this.game.load.audio('get_bra','/bird/image/get-music.wav');
 		this.game.load.image('bird_die','/bird/image/bird-die.png');
 		this.game.load.image('tree','/bird/image/tree.png');
+		this.game.load.audio('bgmusic','/bird/image/bg-music.mp3');
     },
 
     create: function() {
