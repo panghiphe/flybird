@@ -511,7 +511,7 @@ var play_state = {
         this.add_one_tree();
         
         var pipeHeight = this.pipe.height;
-        var holeHeight = this.bird.height * 3.5;
+        var holeHeight = this.bird.height * 3.3;
         var holePosY = Math.floor(Math.random()*(game.world.height * 0.8 - this.ground.height - holeHeight)) + game.world.height * 0.10;
         
         var comeBra = Math.floor(Math.random() * 3) + 2;
