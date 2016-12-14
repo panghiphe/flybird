@@ -137,7 +137,8 @@ class Woaap extends Birdcore
             session('nick_name',$ret['nickname']);   //昵称
             session('user_portrait',$ret['headimgurl']);   //头像
         }else{
-
+            session('nick_name','游客');   //昵称
+            session('user_portrait','/bird/image/bird_portrait.jpg');   //头像
         }
     }
 
