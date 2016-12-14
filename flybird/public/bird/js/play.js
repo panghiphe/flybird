@@ -1,7 +1,7 @@
 var play_state = {
     create: function() { 
         var t = this;
-        // Not 'this.score', but just 'score'
+        // Not 'this.score', but just 'score' 
         score = 0; 
         bra_num = 0;
         
@@ -10,6 +10,7 @@ var play_state = {
         this.scoreLevels = [20, 40, 60, 80]
         this.level = 0;
         this.pipeWidth = game.world.width * 0.15;
+        this.lastHolePosY = -1;
         
         this.comeBraIndex = 5;
         
@@ -535,12 +536,33 @@ var play_state = {
         
         var pipeHeight = this.pipe.height;
         var holeHeight = this.bird.height * 3.3;
-        var holePosY = Math.floor(Math.random()*(game.world.height * 0.8 - this.ground.height - holeHeight)) + game.world.height * 0.10;
+        var holePosY = Math.random()*(game.world.height * 0.8 - this.ground.height - holeHeight) + game.world.height * 0.10;
+        
+        if(this.lastHolePosY != -1)
+        {
+        	if(holePosY < this.lastHolePosY - holeHeight * 1.5)
+        	{
+        		holePosY = this.lastHolePosY - holeHeight * 1.5
+        	}
+        	else if(holePosY > this.lastHolePosY + holeHeight * 2.5)
+        	{
+        		holePosY = this.lastHolePosY + holeHeight * 2.5;
+        	}
+        }
         
         var comeBra = Math.floor(Math.random() * 3) + 2;
         if(this.comeBraIndex >= comeBra)
         {
-        	var braPosY = Math.floor(Math.random()*(game.world.height * 0.75 - this.ground.height)) + game.world.height * 0.15;
+        	//var braPosY = Math.random()*(Math.abs(this.lastHolePosY - holePosY) + holeHeight + this.bird.height * 2) + Math.min(this.lastHolePosY, holePosY) - this.bird.height * 2;
+        	var braPosY = Math.random()*(holePosY + holeHeight + this.bird.height * 1.5) + holePosY - this.bird.height * 3;
+        	if(braPosY < game.world.height * 0.15)
+        	{
+        		braPosY = game.world.height * 0.15;
+        	}
+        	else if(braPosY > game.world.height * 0.75 - this.ground.height)
+        	{
+        		braPosY = game.world.height * 0.75 - this.ground.height;
+        	}
        		this.add_one_bra(game.world.width*(/*2*Math.round(Math.random())+10*/11)/8, braPosY );
        		this.comeBraIndex = 0;
         }
@@ -548,6 +570,8 @@ var play_state = {
         {
         	this.comeBraIndex++;
         }
+        
+        this.lastHolePosY = holePosY;
         
         //上肩带
         var pipeupHeight = this.pipeup.height;
