@@ -5,7 +5,7 @@ var play_state = {
         score = 0; 
         bra_num = 0;
         
-        this.bgIntervals = [5,4.5,4,3.5,3];
+        this.bgIntervals = [3,2.5,2,1.5,1]/*[5,4.5,4,3.5,3]*/;
         this.braIntervals = [3,2.5,2,1.5,1];
         this.scoreLevels = [20, 40, 60, 80]
         this.level = 0;
@@ -85,7 +85,7 @@ var play_state = {
         this.grounds = game.add.group();
 		this.grounds.createMultiple(3, 'ground'); 
         game.physics.arcade.enable(this.grounds, true);
-        this.add_one_ground(0);
+        
         this.ground = this.game.add.sprite(-1*game.world.width, 0, 'ground');
         this.ground.scale.x = game.world.width / this.ground.width;
         this.ground.scale.y = this.ground.scale.x;
@@ -103,6 +103,10 @@ var play_state = {
         
         this.timer = this.game.time.events.loop(this.braIntervals[this.level]*0.75*1000, this.add_row_of_pipes, this);       
         this.add_row_of_pipes();
+        
+        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_ground, this);
+        this.add_one_ground(0);
+        this.add_one_ground();
         
         var fontSize = 18 * pixelRatio;
         var style = { font: "bold " + fontSize + "px Arial", fill: "#ffffff" };
@@ -237,9 +241,9 @@ var play_state = {
         this.bird.anchor.setTo(-0.2, 0.5);		//设置Bird重心
         this.bird.alive = false;
         this.game.time.events.remove(this.timer);
-        /*this.game.time.events.remove(this.bgtimer);
+        this.game.time.events.remove(this.bgtimer);
 
-        this.bgs.forEachAlive(function(bg){
+        /*this.bgs.forEachAlive(function(bg){
             bg.body.velocity.x = 0;
         }, this);
         */
@@ -304,9 +308,10 @@ var play_state = {
 	    	{
 	    		this.level = level;
 	    		
-		        /*this.game.time.events.remove(this.bgtimer);
-		        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_bg, this); 
-		        this.add_one_bg();*/
+		        this.game.time.events.remove(this.bgtimer);
+		        this.bgtimer = this.game.time.events.loop(this.bgIntervals[this.level]*1000-100, this.add_one_ground, this); 
+		        this.add_one_ground();
+		        //this.add_one_bg();
 		        
 		        this.game.time.events.remove(this.timer);
 	    		this.timer = this.game.time.events.loop(this.braIntervals[this.level]*0.75*1000, this.add_row_of_pipes, this);
@@ -330,6 +335,15 @@ var play_state = {
 		        this.bras.forEach(function(bra) {
 		        	bra.body.velocity.x = -1*game.world.width/this.braIntervals[this.level]; 
 		        }, this);
+		        
+		        this.trees.forEach(function(tree) {
+		        	tree.body.velocity.x = -1*game.world.width/this.braIntervals[this.level]; 
+		        }, this);
+		        
+		        this.grounds.forEach(function(ground){
+		        	ground.body.velocity.x = -1*game.world.width/this.bgIntervals[this.level];
+		        }, this);
+		        
 	    	}
         }
     },
@@ -386,7 +400,8 @@ var play_state = {
         
         ground.checkWorldBounds = true;
         ground.outOfBoundsKill = true;
-        ground.body.velocity.x = -1*game.world.width/this.braIntervals[this.level];
+        ground.body.velocity.x = -1*game.world.width/this.bgIntervals[this.level];
+        this.checkAndUpdateLevel();
     },
     
 	//增加游戏背景场景
@@ -493,12 +508,10 @@ var play_state = {
     add_row_of_pipes: function() {
         this.checkAndUpdateLevel();
         
-        this.add_one_ground();
-        
-       this.add_one_tree();
+        this.add_one_tree();
         
         var pipeHeight = this.pipe.height;
-        var holeHeight = this.bird.height * 3;
+        var holeHeight = this.bird.height * 3.5;
         var holePosY = Math.floor(Math.random()*(game.world.height * 0.8 - this.ground.height - holeHeight)) + game.world.height * 0.10;
         
         var comeBra = Math.floor(Math.random() * 3) + 2;
