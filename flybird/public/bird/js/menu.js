@@ -68,7 +68,10 @@ var menu_state={
         this.btnflower.scale.x = game.world.width * 0.19 / this.btnflower.width;
 		this.btnflower.scale.y = this.btnflower.scale.x;
 		this.btnflower.anchor.setTo(0.5,0.5);
-        
+		
+        window.bgmusic = this.game.add.audio('get_bra', 1, true);
+		window.bgmusic.play();
+		
         var bgAudio = '<audio id="game-music" src="/bird/image/bg-music.mp3" style="display: none;" loop="loop"></audio>';
         $("body").append(bgAudio);
         $("#game-music")[0].play();
