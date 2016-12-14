@@ -77,14 +77,14 @@ class Woaap extends Birdcore
         $uri = $this->woaapUrl."/api/oauth2-accesstoken?ackey=$ackey&code=$code";
         $result = $this->_http($uri);
         $ret = json_decode($result,true);
-      //  BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['get_openid' => $ret,
-      //      'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
+        BIRD_APP_DEBUG && \app\addon\Applog::appLog('logs',['get_openid' => $ret,
+            'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         if(isset($ret['openid'])){
             session('openid',$ret['openid']);
             $this->getUserInfo($ret['openid']);   //通过openid 获取用户昵称 头像
         }else{
-            \app\addon\Applog::appLog('logs',['get_openid' => $ret,
-            'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
+          //  \app\addon\Applog::appLog('logs',['get_openid' => $ret,
+          //  'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         }
     }//end
 
