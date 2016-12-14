@@ -33,6 +33,11 @@ var play_state = {
         this.trees = game.add.group();
 		this.trees.createMultiple(3, 'tree'); 
         game.physics.arcade.enable(this.trees, true);
+        this.trees.forEach(function (tree) {
+        	//p.scale.x = this.pipeWidth / p.width;
+        	//p.scale.y = p.scale.x;
+        	tree.isScaled = false;
+        });
 		
         this.merry_Christmas = this.game.add.sprite(game.world.width/2, game.world.height/2-100*pixelRatio, 'merry');
         this.merry_Christmas.scale.x = game.world.width * 0.5 / this.merry_Christmas.width;
@@ -51,6 +56,7 @@ var play_state = {
         this.pipes.forEach(function (p) {
         	//p.scale.x = this.pipeWidth / p.width;
         	//p.scale.y = p.scale.x;
+        	p.isScaled = false;
         });
         this.pipe = this.game.add.sprite(-1*game.world.width, 0, 'pipe');
         this.pipe.scale.x = this.pipeWidth / this.pipe.width;
@@ -60,6 +66,7 @@ var play_state = {
         this.pipeups.createMultiple(3, 'pipeup'); 
         game.physics.arcade.enable(this.pipeups, true);
         this.pipeups.forEach(function (p) {
+        	p.isScaled = false;
         	p.events.onKilled.add(function(){
         		this.isScored = false;
         	}, p);
@@ -74,6 +81,7 @@ var play_state = {
         this.pipedowns.forEach(function (p) {
         	//p.scale.x = this.pipeWidth / p.width;
         	//p.scale.y = p.scale.x;
+        	p.isScaled = false;
         });
         this.pipedown = this.game.add.sprite(-1*game.world.width, 0, 'pipedown');
         this.pipedown.scale.x = this.pipeWidth / this.pipedown.width;
@@ -85,6 +93,11 @@ var play_state = {
         this.grounds = game.add.group();
 		this.grounds.createMultiple(3, 'ground'); 
         game.physics.arcade.enable(this.grounds, true);
+        this.grounds.forEach(function (g) {
+        	//p.scale.x = this.pipeWidth / p.width;
+        	//p.scale.y = p.scale.x;
+        	g.isScaled = false;
+        });
         
         this.ground = this.game.add.sprite(-1*game.world.width, 0, 'ground');
         this.ground.scale.x = game.world.width / this.ground.width;
@@ -364,14 +377,16 @@ var play_state = {
         {
         	tree = this.game.add.sprite(x, y, 'tree');
         	game.physics.arcade.enable(tree);
+        	tree.isScaled = false;
         	this.trees.add(tree);
         }
         tree.reset(x, y);
-        if(game.world.width * 0.4 != tree.width)
+        if(!tree.isScaled)
         {
         	tree.scale.x = game.world.width * 0.4 / tree.width;
 	        tree.scale.y = tree.scale.x;
 	        tree.anchor.setTo(0.5, 1);
+	        tree.isScaled = true;
         }
         
         //tree.checkWorldBounds = true;
@@ -389,13 +404,15 @@ var play_state = {
         	ground = this.game.add.sprite(x, y, 'ground');
         	game.physics.arcade.enable(ground);
         	this.grounds.add(ground);
+        	ground.isScaled = false;
         }
         ground.reset(x, y);
-        if(game.world.width != ground.width)
+        if(!ground.isScaled)
         {
         	ground.scale.x = game.world.width / ground.width;
 	        ground.scale.y = ground.scale.x;
 	        ground.anchor.setTo(0, 1);
+	        ground.isScaled = true;
         }
         
         ground.checkWorldBounds = true;
@@ -431,13 +448,15 @@ var play_state = {
         {
         	pipe = this.game.add.sprite(x, y, 'pipe');
         	game.physics.arcade.enable(pipe);
+        	pipe.isScaled = false;
         	this.pipes.add(pipe);
         }
         pipe.reset(x, y);
-    	if(this.pipeWidth != pipe.width)
+    	if(!pipe.isScaled)
     	{
     		pipe.scale.x = this.pipeWidth / pipe.width;
     		pipe.scale.y = pipe.scale.x;
+    		pipe.isScaled = true;
     	}
         pipe.checkWorldBounds = true;
         pipe.outOfBoundsKill = true;
@@ -450,16 +469,18 @@ var play_state = {
         {
         	pipeup = this.game.add.sprite(x, y, 'pipeup');
         	game.physics.arcade.enable(pipeup);
+        	pipeup.isScaled = false;
         	pipeup.events.onKilled.add(function(){
         		this.isScored = false;
         	}, pipeup);
         	this.pipeups.add(pipeup);
         }
         pipeup.reset(x, y);
-    	if(this.pipeWidth != pipeup.width)
+    	if(!pipeup.isScaled)
     	{
     		pipeup.scale.x = this.pipeWidth / pipeup.width;
     		pipeup.scale.y = pipeup.scale.x;
+    		pipeup.isScaled = true;
     	}
         pipeup.checkWorldBounds = true;
         pipeup.outOfBoundsKill = true;
@@ -472,13 +493,15 @@ var play_state = {
         {
         	pipedown = this.game.add.sprite(x, y, 'pipedown');
         	game.physics.arcade.enable(pipedown);
+        	pipedown.isScaled = false;
         	this.pipedowns.add(pipedown);
         }
         pipedown.reset(x, y);
-        if(this.pipeWidth != pipedown.width)
+        if(!pipedown.isScaled)
     	{
     		pipedown.scale.x = this.pipeWidth / pipedown.width;
     		pipedown.scale.y = pipedown.scale.x;
+    		pipedown.isScaled = true;
     	}
     	
         pipedown.checkWorldBounds = true;
