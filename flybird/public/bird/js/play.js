@@ -146,6 +146,9 @@ var play_state = {
         this.game.physics.arcade.overlap(this.bird, this.grounds, this.restart_game, null, this); 
         
         this.pipeups.forEachExists(this.pass_score,this); //分数检测和更新
+        
+        this.trees.forEachExists(this.check_kill_tree, this);
+        
         this.game.physics.arcade.overlap(this.bird, this.bras, this.collect_bra, null, this);
         this.game.physics.arcade.overlap(this.score_box, this.bras, this.get_bra, null, this);
     },
@@ -329,6 +332,13 @@ var play_state = {
 		        }, this);
 	    	}
         }
+    },
+    
+    check_kill_tree: function(tree) {
+    	if(tree.x <= -1 * tree.width)
+    	{
+    		tree.kill();
+    	}
     },
     
     //增加一棵背景树
