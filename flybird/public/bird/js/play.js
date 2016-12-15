@@ -172,6 +172,10 @@ var play_state = {
     },
     //告诉后台游戏开始
     start_game: function() {
+    	var nowTime = new Date();
+    	var postData = {
+    		start_time: nowTime.toLocaleDateString().replace(/\//g, "-") + " " + nowTime.toTimeString().split(" ")[0]
+    	};
     	$.ajax({
     		url: "/bird/game/start",
     		type: "post",

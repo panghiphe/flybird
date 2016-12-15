@@ -4,12 +4,12 @@ var bra_num = 0;
 var pixelRatio = 2;
 var currentPage = 1;
 $(document).ready(function(){
-	$("body").on('touchmove', function(e) {
+	/*$("body").on('touchmove', function(e) {
 		e = e || window.event;
 		e.stopPropagation();
 		e.preventDefault();
 		return false;
-	});
+	});*/
 	
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
