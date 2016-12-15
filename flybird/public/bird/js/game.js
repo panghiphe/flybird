@@ -4,6 +4,13 @@ var bra_num = 0;
 var pixelRatio = 2;
 var currentPage = 1;
 $(document).ready(function(){
+	$("body").on('touchmove', function(e) {
+		e = e || window.event;
+		e.stopPropagation();
+		e.preventDefault();
+		return false;
+	});
+	
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
 	});
@@ -127,7 +134,7 @@ function getRank(page) {
 					var rankInfo = data.rank[i];
 					rankHtml += '<li class="rank-item">' +
 									'<div class="left-part">' +
-										'<span class="rank">' + (i+1) + '</span>' +
+										'<span class="rank">' + ((currentPage-1) * 10 * (i+1)) + '</span>' +
 										'<img src="' + rankInfo.USER_PORTRAIT + '" class="portrait" />' +
 										'<span class="username">' + rankInfo.NICK_NAME + '</span>' +
 									'</div>' +
