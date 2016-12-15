@@ -139,7 +139,10 @@ function getRank(page) {
 				}
 				$(".rank-group").html(rankHtml);
 			}
-			
+			else
+			{
+				$("#next-btn").attr("disabled", true);
+			}
 		},
 		error: function() {
 			
