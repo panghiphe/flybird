@@ -160,10 +160,13 @@ class Game extends Birdcore{
             return [];
         }
         $page = input('get.page',1,'int');
-        $page = (int)$page;
+       !is_numeric($page) && $page = 1;
+        if($page >= 9){
+            $page = 9;
+        }
         $pagesize = 10;
-       // $startRow = ($page-1)*$pagesize;
-        $startRow = 0;
+        $startRow = ($page-1)*$pagesize;
+        //$startRow = 0;
 
 /*        $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
                 from bird_games_record g
@@ -173,7 +176,7 @@ class Game extends Birdcore{
         $sql = "select * from(select g.openid,max(score) as score,g.spend_time,u.nick_name,u.user_portrait from 
                         bird_games_record g inner join 
                         (select  openid,nick_name,user_portrait,max(login_time) as lt from bird_user_login group by openid) u 
-                        on u.openid=g.openid group by g.openid) t order by score desc limit 10";
+                        on u.openid=g.openid group by g.openid) t order by score desc limit $startRow,$pagesize";
         $presql = $pdo->pdo->prepare($sql);
         $do = $presql->execute();
         if($do){
