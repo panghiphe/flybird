@@ -179,6 +179,7 @@ var play_state = {
     	$.ajax({
     		url: "/bird/game/start",
     		type: "post",
+    		data: postData,
     		dataType: "json",
     		success: function(data) {
     			
