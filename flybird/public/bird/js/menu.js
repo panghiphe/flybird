@@ -80,41 +80,7 @@ var menu_state={
 	},
 	show_rank: function() {
 		$("#rank-dlg").fadeIn("fast");
-		$.ajax({
-    		url: "/bird/game/rank",
-    		type: "post",
-    		dataType: "json",
-    		success: function(data) {
-    			if(!data)
-    			{
-    				return;
-    			}
-    			if(data.error == 0)
-    			{
-    				var rankHtml = "";
-    				for(var i = 0; i < data.rank.length; i++)
-    				{
-    					var rankInfo = data.rank[i];
-    					rankHtml += '<li class="rank-item">' +
-										'<div class="left-part">' +
-											'<span class="rank">' + (i+1) + '</span>' +
-											'<img src="' + rankInfo.USER_PORTRAIT + '" class="portrait" />' +
-											'<span class="username">' + rankInfo.NICK_NAME + '</span>' +
-										'</div>' +
-										'<div class="right-part">' +
-											'<span class="score">' + rankInfo.SCORE + '</span>' +
-										'</div>' +
-										'<div class="clearfix"></div>' +
-									'</li>';
-    				}
-    				$(".rank-group").html(rankHtml);
-    			}
-    			
-    		},
-    		error: function() {
-    			
-    		}
-    	});
+		getRank();
 	},
 	show_rule: function() {
 		$("#rule-dlg").fadeIn("fast");
