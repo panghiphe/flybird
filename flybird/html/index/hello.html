@@ -170,6 +170,30 @@
 		font-weight: bold;
 		text-align: center;
 	}
+	.text-center {
+		text-align: center;
+	}
+	.hand-click {
+		animation: blink 1s infinite;
+		-webkit-animation: blink 1s infinite;
+	}
+	@keyframes blink{
+		0%{opacity: 0;}
+		50%{opacity: 1;}
+	}
+	@-webkit-keyframes blink{
+		0% {opacity: 0;}
+		100% {opacity: 1;}
+	}
+	#current-page {
+		display: inline-block;
+		line-height: 50px;
+		vertical-align: middle;
+		margin-top: -30px;
+		font-size: 18px;
+		font-weight: bold;
+		color: #fff;
+	}
   </style>
 </head>
 <body>
@@ -188,14 +212,15 @@
 						
 					</ul>
 				</div>
-				<!--<div class="page-con">
+				<div class="page-con">
 					<a href="javascript:void(0);" class="page-opt-btn" id="pre-btn">
 						<img src="/bird/image/pre-btn.png" />
 					</a>
+					<span id="current-page">1</span>
 					<a href="javascript:void(0);" class="page-opt-btn" id="next-btn">
 						<img src="/bird/image/next-btn.png" />
 					</a>
-				</div>-->
+				</div>
 			</div>
 			<a href="javascript:void(0);" class="close-btn">
 				<img src="/bird/image/close-btn.png" />
@@ -211,7 +236,19 @@
 			<div class="dlg-content">
 				<img src="/bird/image/board-bg.png" />
 				<div class="board" id="rule-board">
-					<img src="/bird/image/opt-tips.png" style="width: 90%;" />
+					<!--<img src="/bird/image/opt-tips.png" style="width: 90%;" />-->
+					<div class="text-center">
+						<img src="/bird/image/tips-bird1.png" style="width: 28.8%;" />
+					</div>
+					<div style="position: relative;">
+						<img src="/bird/image/tips-bird2.png" style="width: 27.5%; margin-left: 20px;" />
+						<img src="/bird/image/up-arrow.png" style="width: 10.7%; position: absolute;left: 50%; top: 50%; transform: translate(-65%, -50%); -webkit-transform: translate(-65%, -50%);" />
+					</div>
+					<div class="text-center">
+						<img src="/bird/image/click-left.png" style="width: 20.5%;" />
+						<img src="/bird/image/hand.png" class="hand-click" style="width: 16.7%;" />
+						<img src="/bird/image/click-right.png" style="width: 20.5%;" />
+					</div>
 					<p class="opt-tips">
 						点击屏幕任意位置控制小鸟飞行，注意不要让它撞到边上的肩带柱子哦~
 					</p>

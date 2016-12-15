@@ -2,6 +2,7 @@ var game = null;
 var score = 0;
 var bra_num = 0;
 var pixelRatio = 2;
+var currentPage = 1;
 $(document).ready(function(){
 	$(".close-btn").click(function(){
 		$(this).parents().find(".alert-dlg").fadeOut("fast");
@@ -9,6 +10,24 @@ $(document).ready(function(){
 	
 	$("#share-dlg").click(function() {
 		$(this).fadeOut("fast");
+	});
+	
+	//排行榜上一页
+	$("#pre-btn").click(function() {
+		if(currentPage <= 1)
+		{
+			return;
+		}
+		getRank(currentPage - 1);
+	});
+	
+	//排行榜下一页
+	$("#next-btn").click(function() {
+		if($(this).attr("disabled"))
+		{
+			return;
+		}
+		getRank(currentPage + 1);
 	});
 	
 	if($(window).width() > $(window).height())
@@ -71,4 +90,59 @@ function isPointInBounds(point, bounds) {
 		return true;
 	}
 	return false;
+}
+
+function getRank(page) {
+	page = page? page:1;
+	var postData = {
+		page: page
+	};
+	$(".rank-group").html("");
+	currentPage = page;
+	$("#current-page").html(page);
+	$.ajax({
+		url: "/bird/game/rank",
+		type: "post",
+		data: postData,
+		dataType: "json",
+		success: function(data) {
+			if(!data)
+			{
+				$("#next-btn").attr("disabled", true);
+				return;
+			}
+			if(data.error == 0)
+			{
+				if(data.rank.length < 10)
+				{
+					$("#next-btn").attr("disabled", true);
+				}
+				else
+				{
+					$("#next-btn").removeAttr("disabled");
+				}
+				var rankHtml = "";
+				for(var i = 0; i < data.rank.length; i++)
+				{
+					var rankInfo = data.rank[i];
+					rankHtml += '<li class="rank-item">' +
+									'<div class="left-part">' +
+										'<span class="rank">' + (i+1) + '</span>' +
+										'<img src="' + rankInfo.USER_PORTRAIT + '" class="portrait" />' +
+										'<span class="username">' + rankInfo.NICK_NAME + '</span>' +
+									'</div>' +
+									'<div class="right-part">' +
+										'<span class="score">' + rankInfo.SCORE + '</span>' +
+									'</div>' +
+									'<div class="clearfix"></div>' +
+								'</li>';
+				}
+				$(".rank-group").html(rankHtml);
+			}
+			
+		},
+		error: function() {
+			
+		}
+	});
 }
