@@ -102,7 +102,7 @@ function getRank(page) {
 	$("#current-page").html(page);
 	$.ajax({
 		url: "/bird/game/rank",
-		type: "post",
+		type: "get",
 		data: postData,
 		dataType: "json",
 		success: function(data) {
