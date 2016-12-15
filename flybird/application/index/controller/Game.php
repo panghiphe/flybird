@@ -161,8 +161,8 @@ class Game extends Birdcore{
         }
         $page = input('get.page',1,'int');
        !is_numeric($page) && $page = 1;
-        if($page >= 9){
-            $page = 9;
+        if($page >= 10){
+            $page = 10;
         }
         $pagesize = 10;
         $startRow = ($page-1)*$pagesize;
