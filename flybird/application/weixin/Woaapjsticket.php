@@ -1,6 +1,5 @@
 <?php
-namespace app\weinxin;
-use app\weixin\Woaap;
+namespace app\weixin;
 
 /**
  * 微信JS API 专用类
