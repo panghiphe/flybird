@@ -17,10 +17,11 @@ Route::group('bird', function () {
         Route::rule('end','index/game/end','POST');   //游戏玩完
         Route::rule('rank','index/game/rank');  // 游戏排名
         Route::rule('share','index/game/share');   //游戏分享链接
+        Route::rule('test','index/index/test');   //测试页面
     });
 });
 
-Route::miss('index/index/world');    //空路由
+Route::miss('index/hello/world');    //空路由
 return [
     '__pattern__' => [
         'name' => '\w+',

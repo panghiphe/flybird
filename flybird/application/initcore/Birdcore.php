@@ -31,15 +31,20 @@ class Birdcore extends Controller{
     /*使用woaap 系统提供的自动登录接口*/
     protected function woaapAutologin(){
         if(isset($_GET['code'])){
-            session('woaap_code',$_GET['code']);
-            $logs['info'] = '调到woa自动登录接口！';
-            $logs['code'] = $_GET['code'];
-            $logs['file'] = __FILE__;
-            $logs['line'] = __LINE__;
-            \app\addon\Applog::appLog('logs',$logs);
-            $woap = new \app\weixin\Woaap();
-            $woap->autologin();
-            $this->_loginRecord();
+            if((session('woaap_code') && (session('woaap_code') != $_GET['code'])) || !session('woaap_code')) {
+                $logs['session_code'] = session('woaap_code');
+                session('woaap_code', $_GET['code']);
+                $logs['info'] = '调到woa自动登录接口！';
+                $logs['code'] = $_GET['code'];
+                $logs['url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+                $logs['ip'] = getClientIP();
+                $logs['file'] = __FILE__;
+                $logs['line'] = __LINE__;
+                \app\addon\Applog::appLog('logs', $logs);
+                $woap = new \app\weixin\Woaap();
+                $woap->autologin();
+                $this->_loginRecord();
+            }
         }
     }
 

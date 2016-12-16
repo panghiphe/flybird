@@ -18,7 +18,13 @@ use app\addon\Applog;
 class Game extends Birdcore{
 
     public function play(){
-        session('game_start_time',date("Y-m-d H:i:s"));
+        $strtTime = input('post.start_time',date("Y-m-d H:i:s"));
+        !is_string($strtTime) && exit('mao');
+        $patternTime = '/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}$/';  //时间格式  2016-12-15 17:15:16
+
+        !preg_match($patternTime,$strtTime) && $strtTime = date("Y-m-d H:i:s");
+        session('game_start_time',$strtTime);
+
         return ['error' => '0', 'msg' => '游戏时间开始〜开搞!'];
     }
 
@@ -46,7 +52,7 @@ class Game extends Birdcore{
         $maxscore = $this->_getUserMaxScore();
 
         if($score ==0){
-            return ['error' => '0', 'max' => $maxscore, 'msg' => '历史最高分！OH YEAH!',];
+          //  return ['error' => '0', 'max' => $maxscore, 'msg' => '历史最高分！OH YEAH!',];
         }
 
 
@@ -79,8 +85,8 @@ class Game extends Birdcore{
         $doShare = $preShareSql->execute();
 
         if($do && $doShare){
-            //在这里加个向商城加积分的接口
-            $this->_addGameScoreToWoaap($score);
+            //在这里加个向商城加积分的接口   2016.12.12 去掉了
+           // $this->_addGameScoreToWoaap($score);
 
             $shareid = $pdo->pdo->lastInsertId();
             $url = 'http://www.dr-s.cn/bird/game/share?id='.$shareid;
@@ -160,15 +166,23 @@ class Game extends Birdcore{
             return [];
         }
         $page = input('get.page',1,'int');
-        $page = (int)$page;
+       !is_numeric($page) && $page = 1;
+        if($page >= 10){
+            $page = 10;
+        }
         $pagesize = 10;
-       // $startRow = ($page-1)*$pagesize;
-        $startRow = 0;
-        $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
+        $startRow = ($page-1)*$pagesize;
+        //$startRow = 0;
+
+/*        $sql = "select g.score,g.spend_time,u.nick_name,u.user_portrait
                 from bird_games_record g
                 inner join (select DISTINCT openid,nick_name,user_portrait from bird_user_login) u
                 on u.openid=g.openid
-                order by g.score desc limit $startRow,$pagesize";
+                order by g.score desc limit $startRow,$pagesize";*/
+        $sql = "select * from(select g.openid,max(score) as score,g.spend_time,u.nick_name,u.user_portrait from 
+                        bird_games_record g inner join 
+                        (select  openid,nick_name,user_portrait,max(login_time) as lt from bird_user_login group by openid) u 
+                        on u.openid=g.openid group by g.openid) t where t.score>0 order by score desc limit $startRow,$pagesize";
         $presql = $pdo->pdo->prepare($sql);
         $do = $presql->execute();
         if($do){
@@ -223,6 +237,7 @@ class Game extends Birdcore{
 
         $this->assign('score',$data['score']);
         $this->assign('max_score',$data['max_score']);
+        $this->assign('bra_num',$data['bra_num']);
 
         return $this->fetch('share');
     }

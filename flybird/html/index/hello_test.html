@@ -292,7 +292,21 @@
   <script type="text/javascript" src="/bird/js/game.js?v=2016121512"></script>
 <script>
 $(function(){
-
+	//微信JS SDK 类设置
+	wx.config({
+				debug: true,
+				appId: '{$wxkey.appId}',
+				timestamp: {$wxkey.timeStamp},
+			nonceStr: '{$wxkey.nonceStr}',
+			signature: '{$wxkey.signature}',
+			jsApiList: [
+		//  'checkJsApi',
+		'onMenuShareTimeline',          //朋友圈
+		'onMenuShareAppMessage',       //朋友
+		'onMenuShareQQ',
+		'onMenuShareWeibo'
+	]
+});
 
 })//end reday
 </script>

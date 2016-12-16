@@ -83,8 +83,8 @@ class Woaap extends Birdcore
             session('openid',$ret['openid']);
             $this->getUserInfo($ret['openid']);   //通过openid 获取用户昵称 头像
         }else{
-            \app\addon\Applog::appLog('logs',['get_openid' => $ret,
-            'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
+          //  \app\addon\Applog::appLog('logs',['get_openid' => $ret,
+          //  'apiurl' => $uri,'file' => __FILE__,'line' => __LINE__]);
         }
     }//end
 
@@ -137,7 +137,8 @@ class Woaap extends Birdcore
             session('nick_name',$ret['nickname']);   //昵称
             session('user_portrait',$ret['headimgurl']);   //头像
         }else{
-
+            session('nick_name','游客');   //昵称
+            session('user_portrait','/bird/image/bird_portrait.jpg');   //头像
         }
     }
 

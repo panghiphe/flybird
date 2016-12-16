@@ -2,6 +2,7 @@
 namespace app\index\controller;
 
 use app\initcore\Birdcore;
+use app\weixin\Woaapjsticket;
 
 class Index extends Birdcore
 {
@@ -12,12 +13,18 @@ class Index extends Birdcore
      */
     public function hello(){
 
+      //  $wxkey = new Woaapjsticket();
+       // $this->assign('wxkey',$wxkey);
         return $this->fetch('hello');
     }
 
+    public function test(){
 
-
-    public function world(){
-        return 'hello little bird! welcome!';
+          $wxkey = new Woaapjsticket();
+         $key = $wxkey->getSignPackage();
+         $this->assign('wxkey',$key);
+        return $this->fetch('hello_test');
     }
+
+
 }
