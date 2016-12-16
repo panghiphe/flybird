@@ -18,7 +18,7 @@ use app\addon\Applog;
 class Game extends Birdcore{
 
     public function play(){
-        $strtTime = input('start_time',date("Y-m-d H:i:s"));
+        $strtTime = input('post.start_time',date("Y-m-d H:i:s"));
         !is_string($strtTime) && exit('mao');
         $patternTime = '/^\d{4}\-\d{2}\-\d{2}\s\d{2}\:\d{2}\:\d{2}$/';  //时间格式  2016-12-15 17:15:16
 
