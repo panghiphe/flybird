@@ -281,6 +281,7 @@
 	<!--<audio id="game-music" src="/bird/image/bg-music.mp3" style="display: none;" loop="loop"></audio>-->
 	
 	<script type="text/javascript" src="/bird/js/jquery-1.11.2.min.js"></script>
+	<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
   <!--<script type="text/javascript" src="phaser.min.js"></script>-->
   <script type="text/javascript" src="/bird/js/phaser.min-2.4.6.js"></script>
   <script type="text/javascript" src="/bird/js/load.js?v=2016121512"></script>
@@ -288,6 +289,26 @@
   <script type="text/javascript" src="/bird/js/ready.js?v=2016121512"></script>
   <script type="text/javascript" src="/bird/js/play.js?v=2016121512"></script>
   <script type="text/javascript" src="/bird/js/gameover.js?v=2016121512"></script>
-  <script type="text/javascript" src="/bird/js/game.js?v=2016121512"></script> 
+  <script type="text/javascript" src="/bird/js/game.js?v=2016121512"></script>
+<script>
+$(function(){
+
+	//微信JS SDK 类设置
+	wx.config({
+				debug: false,
+				appId: '{$wxkey.appId}',
+				timestamp: {$wxkey.timeStamp},
+			nonceStr: '{$wxkey.nonceStr}',
+			signature: '{$wxkey.signature}',
+			jsApiList: [
+		//  'checkJsApi',
+		'onMenuShareTimeline',          //朋友圈
+		'onMenuShareAppMessage',       //朋友
+		'onMenuShareQQ',
+		'onMenuShareWeibo'
+	]
+});
+})//end reday
+</script>
 </body>
 </html>
