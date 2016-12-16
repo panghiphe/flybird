@@ -13,8 +13,8 @@ class Index extends Birdcore
      */
     public function hello(){
 
-        $wxkey = new Woaapjsticket();
-        $this->assign('wxkey',$wxkey);
+      //  $wxkey = new Woaapjsticket();
+       // $this->assign('wxkey',$wxkey);
         return $this->fetch('hello');
     }
 
