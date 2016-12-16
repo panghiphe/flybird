@@ -18,7 +18,13 @@ class Index extends Birdcore
         return $this->fetch('hello');
     }
 
+    public function test(){
 
+          $wxkey = new Woaapjsticket();
+         $key = $wxkey->getSignPackage();
+         $this->assign('wxkey',$key);
+        return $this->fetch('hello_test');
+    }
 
 
 }
