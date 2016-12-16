@@ -2,7 +2,7 @@
 namespace app\index\controller;
 
 use app\initcore\Birdcore;
-use app\weinxin\Woaapjsticket;
+use app\weixin\Woaapjsticket;
 
 class Index extends Birdcore
 {
