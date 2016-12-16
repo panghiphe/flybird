@@ -182,7 +182,7 @@ class Game extends Birdcore{
         $sql = "select * from(select g.openid,max(score) as score,g.spend_time,u.nick_name,u.user_portrait from 
                         bird_games_record g inner join 
                         (select  openid,nick_name,user_portrait,max(login_time) as lt from bird_user_login group by openid) u 
-                        on u.openid=g.openid group by g.openid) t order by score desc limit $startRow,$pagesize";
+                        on u.openid=g.openid group by g.openid) t where t.score>0 order by score desc limit $startRow,$pagesize";
         $presql = $pdo->pdo->prepare($sql);
         $do = $presql->execute();
         if($do){
