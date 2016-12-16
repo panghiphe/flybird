@@ -31,7 +31,7 @@ class Woaapjsticket extends Woaap
         $signPackage = array(
             "appId" => WX_APP_ID,
             "nonceStr" => $nonceStr,
-            "timestamp" => $timestamp,
+            "timeStamp" => $timestamp,
             "url" => $url,
             "signature" => $signature,
             "rawString" => $string
