@@ -87,7 +87,8 @@
 		height: 100%;
 		left: 0;
 		top: 0;
-		background: rgba(0,0,0,0.3);
+		background: url(/bird/image/rank-bg.jpg);
+		background-size: 100% 100%;
 	}
 	.board-con {
 		position: absolute;
@@ -103,12 +104,16 @@
 		width: 0;
 		height: 0;
 	}
-	.close-btn {
+	.btn-con {
 		position: absolute;
-		width: 40px;
+		width: 100%;
+		text-align: center;
+		bottom: 20px;
+	}
+	.close-btn {
+		display: inline-block;
+		width: 50px;
 		height: auto;
-		top: 45px;
-		right: 45px;
 	}
   </style>
 </head>
@@ -142,14 +147,17 @@
    	</div>
 	
 	<div class="alert-dlg" id="share-dlg">
-		<div class="board-con">
+		<!--<div class="board-con">
 			<div class="dlg-content" style="margin-left: 10%;">
 				<img src="/bird/image/share-tips.png" />
 			</div>
+		</div>-->
+		<img src="/bird/image/share-tips.png" />
+		<div class="btn-con">
+			<a href="javascript:void(0);" class="close-btn">
+				<img src="/bird/image/close-btn.png" />
+			</a>
 		</div>
-		<a href="javascript:void(0);" class="close-btn">
-			<img src="/bird/image/close-btn.png" />
-		</a>
 	</div>
 	
 	<script type="text/javascript" src="/bird/js/jquery-1.11.2.min.js"></script>
