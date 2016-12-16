@@ -46,10 +46,10 @@ var gameover_state = {
 		this.score_board.scale.y = boardScale;
 		this.score_board.anchor.setTo(0.5,0);
 		
-		this.bra_label = this.game.add.text(x-10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.334,"内衣奖励 ",style);
+		this.bra_label = this.game.add.text(x-10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.30,"内衣奖励 ",style);
 		this.bra_label.anchor.setTo(1, 0);
 		
-		this.score_label = this.game.add.text(x+10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.334,"本次分数 ",style);
+		this.score_label = this.game.add.text(x+10 * pixelRatio,this.score_board.position.y + this.score_board.height * 0.30,"本次分数 ",style);
 		
 		this.bra_sprite = this.game.add.sprite(this.bra_label.position.x-this.bra_label.width-8 * pixelRatio, this.bra_label.position.y + this.bra_label.height + 5 * pixelRatio, 'bra0');
 		this.bra_sprite.scale.x = game.world.width * 0.12 / this.bra_sprite.width;
@@ -67,16 +67,17 @@ var gameover_state = {
 		this.max_score_text = this.game.add.text(this.max_score_label.x+this.max_score_label.width/2, this.max_score_label.position.y + this.max_score_label.height," ",style1);
 		this.max_score_text.anchor.setTo(0.5, 0);
 		
-		this.replayBtn = this.game.add.button(x-8 * pixelRatio, this.score_board.position.y + this.score_board.height * 0.564 + 5 * pixelRatio, "replaybtn", this.start);
-        var btnScale = 30 * pixelRatio / this.replayBtn.width;
+		this.replayBtn = this.game.add.button(x, this.max_score_text.position.y + this.max_score_text.height + 5 * pixelRatio, "replaybtn", this.start);
+        var btnScale = game.world.width * 0.25 / this.replayBtn.width;
         this.replayBtn.scale.x = btnScale;
 		this.replayBtn.scale.y = btnScale;
-		this.replayBtn.anchor.setTo(1,0);
+		this.replayBtn.anchor.setTo(0.5,0);
 		
-		this.rankBtn = this.game.add.button(x+8 * pixelRatio, this.replayBtn.position.y, "rank_btn", this.show_rank);
-        var btnScale = 30 * pixelRatio / this.rankBtn.width;
+		this.rankBtn = this.game.add.button(x, this.replayBtn.position.y + this.replayBtn.height + 0 * pixelRatio, "rank_btn", this.show_rank);
+        var btnScale = game.world.width * 0.25 / this.rankBtn.width;
         this.rankBtn.scale.x = btnScale;
 		this.rankBtn.scale.y = btnScale;
+		this.rankBtn.anchor.setTo(0.5,0);
 		
 		var shareBtnY = this.score_board.position.y + this.score_board.height;
 		while(shareBtnY >= game.world.height-10 * pixelRatio)
@@ -147,6 +148,6 @@ var gameover_state = {
 		}
 	},
 	start:function(){
-		this.game.state.start('menu');	
+		this.game.state.start('play');	
 	}
 };
