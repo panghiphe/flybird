@@ -58,7 +58,7 @@ class Woaapjsticket extends Woaap
     {
         // jsapi_ticket 应该全局存储与更新，以下代码以写入到文件中做示例
         // $data = json_decode(file_get_contents("jsapi_ticket.json"));
-        $uri = '/api/jsticket?ackey=';
+        $uri = $this->woaapUrl.'/api/jsticket?ackey=';
 
         $ackey = $this->getWoaAcKey();   //获取ACKEY
 
