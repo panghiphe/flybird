@@ -203,6 +203,8 @@
 	<img src="/bird/image/share-img.jpg" class="share-img" />
 	<div id="game_div"></div>
 	
+	<!--<button id="share-btn">分享</button>-->
+	
 	<div class="alert-dlg" id="rank-dlg">
 		<div class="board-con">
 			<div class="dlg-title">
@@ -294,20 +296,43 @@
 $(function(){
 	//微信JS SDK 类设置
 	wx.config({
-				debug: true,
-				appId: '{$wxkey.appId}',
-				timestamp: {$wxkey.timeStamp},
-			nonceStr: '{$wxkey.nonceStr}',
-			signature: '{$wxkey.signature}',
-			jsApiList: [
-		//  'checkJsApi',
-		'onMenuShareTimeline',          //朋友圈
-		'onMenuShareAppMessage',       //朋友
-		'onMenuShareQQ',
-		'onMenuShareWeibo'
-	]
-});
-
+		debug: true,
+		appId: '{$wxkey.appId}',
+		timestamp: {$wxkey.timeStamp},
+		nonceStr: '{$wxkey.nonceStr}',
+		signature: '{$wxkey.signature}',
+		jsApiList: [
+			//  'checkJsApi',
+			'onMenuShareTimeline',          //朋友圈
+			'onMenuShareAppMessage',       //朋友
+			'onMenuShareQQ',
+			'onMenuShareWeibo'
+		]
+	});
+	
+	wx.ready(function(){
+		var shareUrl = "http://api.woaap.com/api/oauth2-authorize?appid=wx33c182aa7e4ad93c&scope=snsapi_base&redirect_uri=http%3A%2F%2Fwww.dr-s.cn%2Fbird%2Findex";
+		var shareObj = {
+				title: "穿越Bra城，你敢吗？", // 分享标题
+			    desc: "挑战我！看看你能得几分？", // 分享描述
+			    link: shareUrl,//top.location.protocol + "//" + top.location.host + "/" + data.url, // 分享链接
+			    imgUrl: top.location.protocol + "//" + top.location.host + "/bird/image/share-img.jpg", // 分享图标
+			    success: function () { 
+			        // 用户确认分享后执行的回调函数
+			    },
+			    cancel: function () { 
+			        // 用户取消分享后执行的回调函数
+			    }
+			}
+		wx.onMenuShareAppMessage(shareObj);
+		wx.onMenuShareTimeline(shareObj);
+		wx.onMenuShareQQ(shareObj);
+		wx.onMenuShareQQ(shareObj);
+		wx.onMenuShareQZone(shareObj);
+	});
+	
+	
+});//end
 })//end reday
 </script>
 </body>
