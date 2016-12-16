@@ -52,7 +52,7 @@ class Game extends Birdcore{
         $maxscore = $this->_getUserMaxScore();
 
         if($score ==0){
-            return ['error' => '0', 'max' => $maxscore, 'msg' => '历史最高分！OH YEAH!',];
+          //  return ['error' => '0', 'max' => $maxscore, 'msg' => '历史最高分！OH YEAH!',];
         }
 
 
